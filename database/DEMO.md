@@ -15,3 +15,5 @@ No uses esta carga como reemplazo de los datos reales requeridos para operar una
 El portal no solicita ni realiza verificación telefónica; el teléfono se usa únicamente como dato de contacto del pedido.
 
 La configuración de producción requiere PostgreSQL, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `JWT_SECRET`, una `DATA_ENCRYPTION_KEY` hexadecimal de 32 bytes y un `APP_ORIGIN` HTTPS. No habilites `DEMO_MODE` en una imagen con `NODE_ENV=production`.
+
+Al iniciar, la migración 13 vuelve a cifrar de forma transaccional los datos heredados con la clave demo usando la `DATA_ENCRYPTION_KEY` configurada; conserva esa clave estable después del despliegue. Si algún dato no puede descifrarse, la migración se cancela sin aplicar cambios parciales. Nunca copies la clave demo incluida en el código a producción.

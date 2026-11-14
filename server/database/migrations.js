@@ -2,7 +2,7 @@ import { upgradeRolePolicy } from '../security/role-policy.js';
 import bcrypt from 'bcryptjs';
 import { randomUUID } from 'node:crypto';
 import { roleSeeds, permissionLabels } from '../security/permissions.js';
-import { encrypt, decrypt, privateHash } from '../security/crypto.js';
+import { encrypt, decrypt, privateHash, reencryptLegacyDemoValue } from '../security/crypto.js';
 import { auditDigest } from '../models/audit.js';
 import { demoMode } from '../config.js';
 import { schema } from './schema.js';
@@ -113,6 +113,7 @@ export async function migrate(database) {
     await upgradeRolePolicy(database);
     await upgradeCashRegister(database);
     await removePhoneVerificationTables(database);
+    await upgradeEncryptionKey(database);
     return;
   }
   await database.transaction(async (q) => {
@@ -247,6 +248,107 @@ export async function migrate(database) {
   await upgradeRolePolicy(database);
   await upgradeCashRegister(database);
   await removePhoneVerificationTables(database);
+  await upgradeEncryptionKey(database);
+}
+
+const encryptedColumns = [
+  ['users', 'id', 'totp_cipher'],
+  ['auth_challenges', 'id', 'secret_cipher'],
+  ['employees', 'id', 'salary_cipher'],
+  ['salary_history', 'id', 'salary_cipher'],
+  ['clients', 'id', 'cui_cipher'],
+  ['portal_credentials', 'order_id', 'code_cipher'],
+  ['payroll_details', 'payroll_id', 'breakdown_cipher'],
+  ['simulated_messages', 'id', 'phone_cipher'],
+  ['simulated_messages', 'id', 'text_cipher'],
+  ['prescription_versions', 'id', 'image_cipher'],
+  ['portal_prescriptions', 'order_id', 'image_cipher'],
+];
+
+function normalizedPhone(value) {
+  const digits = String(value || '')
+    .replace(/\D/g, '')
+    .replace(/^502(?=\d{8}$)/, '');
+  if (!/^\d{8}$/.test(digits))
+    throw new Error('Teléfono inválido durante la migración de cifrado.');
+  return '+502' + digits;
+}
+
+function clientPortalHash(client) {
+  if (client.cui_cipher) {
+    const cui = decrypt(client.cui_cipher).replace(/[\s-]/g, '');
+    if (!/^\d{13}$/.test(cui)) throw new Error('CUI inválido durante la migración de cifrado.');
+    return privateHash('dpi:' + cui);
+  }
+  const name = String(client.name || '')
+    .trim()
+    .toLocaleLowerCase('es')
+    .replace(/\s+/g, ' ');
+  return privateHash('contact:' + normalizedPhone(client.phone) + ':' + name);
+}
+
+async function upgradeEncryptionKey(database) {
+  if ((await database.query('SELECT version FROM schema_migrations WHERE version=13')).rows.length)
+    return;
+  await database.transaction(async (q) => {
+    for (const [table, idColumn, cipherColumn] of encryptedColumns) {
+      const rows = (
+        await q(
+          `SELECT ${idColumn},${cipherColumn} FROM ${table} WHERE ${cipherColumn} IS NOT NULL`,
+        )
+      ).rows;
+      for (const row of rows) {
+        const ciphertext = reencryptLegacyDemoValue(row[cipherColumn]);
+        if (ciphertext !== row[cipherColumn])
+          await q(`UPDATE ${table} SET ${cipherColumn}=$1 WHERE ${idColumn}=$2`, [
+            ciphertext,
+            row[idColumn],
+          ]);
+      }
+    }
+
+    const portalClients = (
+      await q(
+        'SELECT c.id,c.name,c.phone,c.cui_cipher FROM portal_clients p JOIN clients c ON c.id=p.client_id',
+      )
+    ).rows.map((client) => ({ client_id: client.id, dpi_hash: clientPortalHash(client) }));
+    if (new Set(portalClients.map((client) => client.dpi_hash)).size !== portalClients.length)
+      throw new Error('Hay contactos duplicados durante la migración de cifrado.');
+    await q('DELETE FROM portal_clients');
+    for (const client of portalClients)
+      await q('INSERT INTO portal_clients (dpi_hash,client_id) VALUES ($1,$2)', [
+        client.dpi_hash,
+        client.client_id,
+      ]);
+
+    const messages = (await q('SELECT id,phone_cipher FROM simulated_messages')).rows;
+    for (const message of messages)
+      await q('UPDATE simulated_messages SET phone_hash=$1 WHERE id=$2', [
+        privateHash('phone:' + normalizedPhone(decrypt(message.phone_cipher))),
+        message.id,
+      ]);
+
+    const cancellations = (
+      await q(
+        'SELECT pc.order_id,pc.dpi_hash,o.phone,c.cui_cipher FROM portal_cancellations pc JOIN orders o ON o.id=pc.order_id LEFT JOIN clients c ON c.id=o.client_id',
+      )
+    ).rows;
+    for (const cancellation of cancellations) {
+      const dpiHash =
+        cancellation.dpi_hash && cancellation.cui_cipher
+          ? privateHash('dpi:' + decrypt(cancellation.cui_cipher).replace(/[\s-]/g, ''))
+          : null;
+      if (cancellation.dpi_hash && !dpiHash)
+        throw new Error('No se pudo reconstruir el índice CUI de una cancelación.');
+      await q('UPDATE portal_cancellations SET phone_hash=$1,dpi_hash=$2 WHERE order_id=$3', [
+        privateHash('phone:' + normalizedPhone(cancellation.phone)),
+        dpiHash,
+        cancellation.order_id,
+      ]);
+    }
+
+    await q('INSERT INTO schema_migrations VALUES ($1,$2)', [13, new Date().toISOString()]);
+  });
 }
 async function upgradePortal(database) {
   if ((await database.query('SELECT version FROM schema_migrations WHERE version=5')).rows.length)
@@ -456,4 +558,3 @@ async function removePhoneVerificationTables(database) {
     await q('INSERT INTO schema_migrations VALUES ($1,$2)', [12, new Date().toISOString()]);
   });
 }
-

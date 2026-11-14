@@ -1,16 +1,12 @@
 import { randomUUID, randomBytes, timingSafeEqual } from 'node:crypto';
 import { db } from '../database/db.js';
 import { Pharmacy, AppError, distance } from './pharmacy.js';
-import { encrypt, decrypt, sha256, privateHash } from '../security/crypto.js';
+import { encrypt, decrypt, sha256, privateHash, legacyPrivateHash } from '../security/crypto.js';
 import { writeAudit } from './audit.js';
 import QRCode from 'qrcode';
 import { businessClock } from '../config.js';
 import { deliveryEstimate, pickupEstimate } from '../security/delivery.js';
-import {
-  phoneNumber,
-  dpi as optionalDpi,
-  portalContactKey,
-} from '../security/contact.js';
+import { phoneNumber, dpi as optionalDpi, portalContactKey } from '../security/contact.js';
 
 export class Portal {
   constructor(database = db, clock = businessClock) {
@@ -184,17 +180,22 @@ export class Portal {
       throw new AppError('Selecciona la forma de recibir tu pedido.');
     await this.expire();
     const requestHash = privateHash(`request:${data.request_id}`);
+    const legacyRequestHash = legacyPrivateHash(`request:${data.request_id}`);
     const accessCode = privateHash(`ticket:${data.request_id}`).slice(0, 24).toUpperCase();
-    const payloadHash = privateHash(
-      JSON.stringify(
-        Object.fromEntries(Object.entries({ ...data, dpi }).sort(([a], [b]) => a.localeCompare(b))),
-      ),
+    const payload = JSON.stringify(
+      Object.fromEntries(Object.entries({ ...data, dpi }).sort(([a], [b]) => a.localeCompare(b))),
     );
+    const payloadHash = privateHash(payload);
+    const legacyPayloadHash = legacyPrivateHash(payload);
     return this.db.transaction(async (q) => {
-      const prior = (await q('SELECT * FROM portal_orders WHERE request_hash=$1', [requestHash]))
-        .rows[0];
+      const prior = (
+        await q('SELECT * FROM portal_orders WHERE request_hash IN ($1,$2)', [
+          requestHash,
+          legacyRequestHash,
+        ])
+      ).rows[0];
       if (prior) {
-        if (prior.payload_hash !== payloadHash)
+        if (prior.payload_hash !== payloadHash && prior.payload_hash !== legacyPayloadHash)
           throw new AppError('Este intento ya se utilizó. Inicia un pedido nuevo.', 409);
         const currentCode = (
           await q('SELECT code_cipher FROM portal_credentials WHERE order_id=$1', [prior.order_id])
@@ -345,19 +346,24 @@ export class Portal {
       throw new AppError('Revisa los medicamentos y sus cantidades (1 a 100 por medicamento).');
     await this.expire();
     const requestHash = privateHash(`request:${data.request_id}`),
+      legacyRequestHash = legacyPrivateHash(`request:${data.request_id}`),
       accessCode = String(
         parseInt(privateHash(`cart-ticket:${data.request_id}`).slice(0, 8), 16) % 1000000,
       ).padStart(6, '0');
-    const payloadHash = privateHash(
-      JSON.stringify(
-        Object.fromEntries(Object.entries(data).sort(([a], [b]) => a.localeCompare(b))),
-      ),
+    const payload = JSON.stringify(
+      Object.fromEntries(Object.entries(data).sort(([a], [b]) => a.localeCompare(b))),
     );
+    const payloadHash = privateHash(payload),
+      legacyPayloadHash = legacyPrivateHash(payload);
     const result = await this.db.transaction(async (q) => {
-      const prior = (await q('SELECT * FROM portal_orders WHERE request_hash=$1', [requestHash]))
-        .rows[0];
+      const prior = (
+        await q('SELECT * FROM portal_orders WHERE request_hash IN ($1,$2)', [
+          requestHash,
+          legacyRequestHash,
+        ])
+      ).rows[0];
       if (prior) {
-        if (prior.payload_hash !== payloadHash)
+        if (prior.payload_hash !== payloadHash && prior.payload_hash !== legacyPayloadHash)
           throw new AppError('Este intento ya se utilizó. Inicia un pedido nuevo.', 409);
         const currentCode = (
           await q('SELECT code_cipher FROM portal_credentials WHERE order_id=$1', [prior.order_id])
@@ -539,18 +545,23 @@ export class Portal {
   async lookup({ ticket, access_code }) {
     await this.expire();
     ticket = ticket.toUpperCase().trim();
-    const lookupCode = String(access_code || '').replace(/\s/g, '').toUpperCase();
+    const lookupCode = String(access_code || '')
+      .replace(/\s/g, '')
+      .toUpperCase();
     const result = await this.db.transaction(async (q) => {
       const guard = (await q('SELECT * FROM portal_access_guards WHERE ticket=$1', [ticket]))
         .rows[0];
       if (guard?.locked_until && guard.locked_until > new Date().toISOString())
         return { locked: true };
       const row = (
-        await q('SELECT po.order_id,po.access_hash,pc.code_cipher FROM portal_orders po LEFT JOIN portal_credentials pc ON pc.order_id=po.order_id WHERE po.ticket=$1', [
-          ticket.toUpperCase().trim(),
-        ])
+        await q(
+          'SELECT po.order_id,po.access_hash,pc.code_cipher FROM portal_orders po LEFT JOIN portal_credentials pc ON pc.order_id=po.order_id WHERE po.ticket=$1',
+          [ticket.toUpperCase().trim()],
+        )
       ).rows[0];
-      const normalizedCode = String(access_code || '').replace(/\s/g, '').toUpperCase();
+      const normalizedCode = String(access_code || '')
+        .replace(/\s/g, '')
+        .toUpperCase();
       const given = Buffer.from(sha256(normalizedCode || ''));
       const expected = Buffer.from(row?.access_hash || sha256('invalid'));
       const authorized = !normalizedCode || (row && timingSafeEqual(given, expected));
@@ -580,7 +591,16 @@ export class Portal {
       qr: await QRCode.toDataURL(
         JSON.stringify({
           ticket: result.ticket,
-          access_code: lookupCode || decrypt((await this.db.query('SELECT pc.code_cipher FROM portal_orders po JOIN portal_credentials pc ON pc.order_id=po.order_id WHERE po.ticket=$1', [result.ticket])).rows[0].code_cipher),
+          access_code:
+            lookupCode ||
+            decrypt(
+              (
+                await this.db.query(
+                  'SELECT pc.code_cipher FROM portal_orders po JOIN portal_credentials pc ON pc.order_id=po.order_id WHERE po.ticket=$1',
+                  [result.ticket],
+                )
+              ).rows[0].code_cipher,
+            ),
         }),
         { width: 220, margin: 2 },
       ),
