@@ -1763,14 +1763,21 @@ export default function App() {
             </select>
           </label>
           {(() => {
-            const employees = data.employees.filter((e) => e.branch_id === modal.branchId);
+            const accountsById = new Map((data.users || []).map((account) => [account.id, account]));
+            const employees = data.employees.filter((employee) => {
+              if (employee.branch_id !== modal.branchId || employee.state !== 'Activo') return false;
+              if (!employee.user_id) return true;
+              return accountsById.get(employee.user_id)?.state === 'Activo';
+            });
             const employeeUserIds = new Set(
               employees.map((employee) => employee.user_id).filter(Boolean),
             );
             const branchUsers = (data.users || [])
               .filter(
                 (account) =>
-                  account.branch_id === modal.branchId && !employeeUserIds.has(account.id),
+                  account.branch_id === modal.branchId &&
+                  account.state === 'Activo' &&
+                  !employeeUserIds.has(account.id),
               )
               .map((account) => ({
                 id: `user-${account.id}`,
