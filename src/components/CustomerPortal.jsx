@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { request, money, Receipt, LocationPin } from './PublicPortal.jsx';
+import { validGuatemalanCui } from '../../shared/guatemalan-cui.js';
 import '../portal.css';
 
 function QuantityPicker({ name, value, max, onChange, catalog = false }) {
@@ -211,6 +212,12 @@ export default function CustomerPortal() {
     e.preventDefault();
     if (!details.dpi || details.dpi.length !== 13) {
       setError('El CUI/DPI es obligatorio para confirmar tu pedido.');
+      return;
+    }
+    if (!validGuatemalanCui(details.dpi)) {
+      setError(
+        'El CUI/DPI no es válido. Revisa el dígito verificador y los códigos de departamento y municipio.',
+      );
       return;
     }
     if (false) {
@@ -845,6 +852,9 @@ export default function CustomerPortal() {
                                 pattern="[0-9]{13}"
                                 maxLength={13}
                                 required
+                                aria-invalid={
+                                  Boolean(details.dpi) && !validGuatemalanCui(details.dpi)
+                                }
                                 value={details.dpi}
                                 onChange={(e) => update('dpi', e.target.value.replace(/\D/g, ''))}
                               />
@@ -863,7 +873,8 @@ export default function CustomerPortal() {
                             </label>
                           </div>
                           <small>
-                            El CUI/DPI es obligatorio para registrar el pedido.
+                            Debe tener dígito verificador y códigos válidos de departamento y
+                            municipio.
                           </small>
                         </fieldset>
                         {mode === 'delivery' && (

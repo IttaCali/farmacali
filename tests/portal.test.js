@@ -8,6 +8,7 @@ import { Portal } from '../server/models/portal.js';
 import { Pharmacy } from '../server/models/pharmacy.js';
 import { Management } from '../server/models/management.js';
 import { decrypt } from '../server/security/crypto.js';
+import { validCui } from '../server/security/contact.js';
 import { schemas } from '../server/middleware/validation.js';
 import { parseOrderTicket } from '../shared/order-ticket.js';
 const database = new Database('', ':memory:'),
@@ -84,6 +85,14 @@ test('DPI opcional con formato válido, catálogo público acotado y sucursales 
   assert.ok(options.options.some((b) => b.serviceable));
   assert.ok(options.options.every((b) => b.ready_at));
   assert.ok(options.options.every((b) => typeof b.available === 'boolean'));
+});
+test('CUI del portal valida dígito verificador y códigos de departamento y municipio', () => {
+  const valid = '1234567890101';
+  assert.equal(validCui(valid), true);
+  assert.equal(schemas.portalOrder.shape.dpi.safeParse(valid).success, true);
+  assert.equal(validCui('1234567880101'), false);
+  assert.equal(validCui('1234567899999'), false);
+  assert.equal(schemas.portalOrder.shape.dpi.safeParse('1234567880101').success, false);
 });
 test('Reserva FEFO atómica e idempotente; DPI cifrado y cliente frecuente sin sobrescritura', async () => {
   const stock = Number(

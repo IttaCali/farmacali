@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { AppError } from '../models/pharmacy.js';
 import { privateHash, encrypt } from './crypto.js';
+import { validGuatemalanCui } from '../../shared/guatemalan-cui.js';
 
 export const phoneNumber = (value) => {
   const p = String(value || '').replace(/\D/g, '').replace(/^502(?=\d{8}$)/, '');
@@ -15,20 +16,7 @@ export const dpi = (value) => {
   return p;
 };
 
-export const validCui = (value) => {
-  const p = String(value || '').replace(/[\s-]/g, '');
-  if (!/^\d{13}$/.test(p)) return false;
-  const department = Number(p.slice(9, 11));
-  const municipality = Number(p.slice(11, 13));
-  const municipalityCounts = [0, 17, 8, 16, 16, 13, 14, 19, 8, 24, 21, 9, 30, 32, 21, 8, 17, 14, 5, 11, 11, 7, 17];
-  if (department < 1 || department > 22 || municipality < 1 || municipality > (municipalityCounts[department] || 0))
-    return false;
-  const firstEight = p.slice(0, 8).split('');
-  const remainder = firstEight.reduce((sum, digit, index) => sum + Number(digit) * (index + 2), 0) % 11;
-  if (remainder === 10 || remainder !== Number(p[8]))
-    return false;
-  return true;
-};
+export const validCui = validGuatemalanCui;
 
 export const portalContactKey = (value, phone, name) =>
   value

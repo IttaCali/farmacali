@@ -18,14 +18,20 @@ const optionalDpi = z
   .string()
   .trim()
   .regex(/^(?:\d{13})?$/, 'El CUI/DPI opcional debe tener 13 dígitos.')
-  .refine((value) => !value || process.env.CUI_STRICT !== 'true' || process.env.NODE_TEST_CONTEXT || validCui(value), 'El código de municipio o dígito verificador del CUI/DPI no es válido.')
+  .refine(
+    (value) => !value || validCui(value),
+    'El CUI/DPI no es válido. Revisa el dígito verificador y los códigos de departamento y municipio.',
+  )
   .optional()
   .default('');
 const requiredDpi = z
   .string()
   .trim()
   .regex(/^\d{13}$/, 'El CUI/DPI es obligatorio y debe tener 13 dígitos.')
-  .refine((value) => process.env.CUI_STRICT !== 'true' || process.env.NODE_TEST_CONTEXT || validCui(value), 'El código de municipio o dígito verificador del CUI/DPI no es válido.');
+  .refine(
+    (value) => validCui(value),
+    'El CUI/DPI no es válido. Revisa el dígito verificador y los códigos de departamento y municipio.',
+  );
 const portalDpi = process.env.NODE_TEST_CONTEXT ? optionalDpi : requiredDpi;
 export const schemas = {
   assetIncident: z.object({ asset_id: key, description: text(1000) }),
