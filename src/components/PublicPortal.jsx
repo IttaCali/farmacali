@@ -168,13 +168,10 @@ export function Receipt({ receipt, onNew, authorizationCode, onRefresh }) {
         <div>
           <Clock size={20} />
           <div>
-            <small>Estimación inicial, hora de Guatemala</small>
-            <strong>{when(receipt.ready_estimate)}</strong>
+            <small>Pedido iniciado · Hora de Guatemala</small>
+            <strong>{when(receipt.created_at)}</strong>
             {receipt.expires_at && (
-              <p>
-                Reserva hasta {when(receipt.expires_at)}. Si vence sin retiro, se cancelará y
-                liberará las unidades.
-              </p>
+              <p>Vence: {when(receipt.expires_at)}</p>
             )}
           </div>
         </div>
