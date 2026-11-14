@@ -1,0 +1,3 @@
+import { readFileSync,writeFileSync } from 'node:fs';
+const controller='server/controllers/pharmacyController.js';let c=readFileSync(controller,'utf8');const start=c.indexOf('export async function login('),end=c.indexOf('export const snapshot');if(start!==-1)c=c.slice(0,start)+c.slice(end);c=c.replace("import bcrypt from 'bcryptjs';\n",'').replace("import jwt from 'jsonwebtoken';\n",'').replace('jwtSecret, demoMode','demoMode');writeFileSync(controller,c);
+const validation='server/middleware/validation.js';let v=readFileSync(validation,'utf8');v=v.replaceAll('prescription_id:key.optional()','prescription_id:key.or(z.literal(\'\')).optional()').replaceAll('client_id:key.optional()','client_id:key.or(z.literal(\'\')).optional()');writeFileSync(validation,v);

@@ -1,0 +1,23 @@
+import { readFileSync,writeFileSync } from 'node:fs';
+const file='src/App.jsx';let source=readFileSync(file,'utf8');
+const start=source.indexOf('function Login('),end=source.indexOf('function Brand(');
+if(start!==-1){if(end<start)throw new Error('No se encontró el límite de Login');source=source.slice(0,start)+source.slice(end);}
+source=source.replace("import { api, money, count, datetime, day, csv } from './lib/api';","import { api, money, count, datetime, day, csv } from './lib/api';\nimport { SecureLogin, AccountMenu, useInactivity } from './components/Security';");
+source=source.replace("    sessionStorage.removeItem('farmacali-token');","    api('/auth/logout',{}).catch(()=>{});");
+source=source.replace("    if (!sessionStorage.getItem('farmacali-token')) return setChecking(false);",'');
+source=source.replace('if (!user) return <Login onLogin={setUser} />;','if (!user) return <SecureLogin onLogin={setUser} />;');
+source=source.replace('  const refresh = useCallback(async () => {','  const idleWarning=useInactivity(user,logout);\n  useEffect(()=>{window.addEventListener("farmacali-expired",logout);return()=>window.removeEventListener("farmacali-expired",logout);},[logout]);\n  const refresh = useCallback(async () => {');
+source=source.replace("    write = user.role !== 'auditor',","    write = ['admin','branch','callcenter'].includes(user.role),");
+source=source.replace('            <span className="avatar small">{user.name.slice(0, 1)}</span>','            <AccountMenu user={user} onLogout={logout}/>');
+source=source.replace("{({ admin: 'Administrador', operator: 'Operador', auditor: 'Auditor' })[user.role]}",'{user.role_name}');
+source=source.replace('<div className="main-shell">','<div className="main-shell">{idleWarning}');
+source=source.replace('    orders: write &&',"    orders: user.permissions.includes('pedido.crear') &&");
+source=source.replace('    inventory: write &&',"    inventory: user.permissions.includes('inventario.ingresar') &&");
+source=source.replace('    transfers: write &&',"    transfers: user.permissions.includes('traslado.crear') &&");
+source=source.replace('    cash: write &&',"    cash: user.permissions.includes('venta.crear') &&");
+const permissions={dashboard:'resumen.ver',branches:'sucursal.ver',inventory:'inventario.ver',transfers:'traslado.ver',cash:'caja.ver',assets:'activo.ver',payroll:'planilla.ver',orders:'pedido.ver',audit:'auditoria.ver'};
+source=source.replace('const descriptions = {','const navPermissions='+JSON.stringify(permissions)+';\nconst descriptions = {');
+source=source.replace('{nav.map(([key, label, Icon], i) => (','{nav.filter(([key])=>user.permissions.includes(navPermissions[key])).map(([key, label, Icon], i) => (');
+source=source.replace('  const exportMap = {','  const exportMap = {');
+source=source.replace('    audit: data.audit,',"    ...(user.permissions.includes('auditoria.exportar')?{audit:data.audit}:{}),");
+writeFileSync(file,source);console.log('Vista adaptada a cookies, cuatro roles y menú de cuenta.');

@@ -1,0 +1,121 @@
+.record-field-label {
+  display: none;
+}
+.record-field-value {
+  min-width: 0;
+}
+@media (max-width: 600px) {
+  .table-wrap table.record-table,
+  .table-scroll table.record-table {
+    display: block;
+    min-width: 0;
+    width: 100%;
+    border-collapse: separate;
+  }
+  .record-table > thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .record-table > thead:focus-within {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    clip-path: none;
+    white-space: normal;
+    overflow-x: auto;
+    display: block;
+  }
+  .record-table > thead:focus-within tr {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .record-table > thead:focus-within th {
+    display: block;
+    padding: 8px;
+  }
+  .table-wrap table.record-table > tbody,
+  .table-scroll table.record-table > tbody {
+    display: block;
+    padding: 12px;
+    background: var(--surface-soft, #f7f6f8);
+  }
+  .table-wrap table.record-table > tbody > tr,
+  .table-scroll table.record-table > tbody > tr {
+    display: block;
+    margin: 0 0 12px;
+    background: var(--surface, #fff);
+    border: 1px solid var(--border, #e3e0e6);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .table-wrap table.record-table > tbody > tr:last-child,
+  .table-scroll table.record-table > tbody > tr:last-child {
+    margin-bottom: 0;
+  }
+  .table-wrap table.record-table td,
+  .table-scroll table.record-table td {
+    display: grid;
+    grid-template-columns: minmax(70px, 30%) minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    padding: 11px 13px;
+    width: auto;
+    min-width: 0;
+    text-align: left;
+    white-space: normal;
+    border: 0;
+    border-top: 1px solid var(--border, #eae8ed);
+    font-size: 12px;
+  }
+  .table-wrap table.record-table td:first-child,
+  .table-scroll table.record-table td:first-child {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    border-top: 0;
+    background: var(--surface-soft, #f7f6f8);
+  }
+  .record-table .record-field-label {
+    display: block;
+    color: var(--muted, #7a7383);
+    font-size: 10px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+  .record-table td:first-child .record-field-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+  .record-table .record-field-value {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+  .record-table .record-field-value .cell-title {
+    gap: 9px;
+    align-items: flex-start;
+  }
+  .record-table .record-field-value .cell-title strong {
+    font-size: 13px;
+  }
+  .record-table .record-field-value small {
+    white-space: normal;
+  }
+  .record-table .table-actions {
+    flex-wrap: wrap;
+  }
+  .record-table .table-button {
+    white-space: normal;
+    min-height: 37px;
+    padding: 8px 10px;
+  }
+}

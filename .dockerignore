@@ -1,0 +1,12 @@
+node_modules
+dist
+data
+.env
+.git
+evidencia
+docs
+tests
+scripts
+README.md
+compose.yaml
+render.yaml

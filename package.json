@@ -1,0 +1,63 @@
+{
+  "name": "farmacia-nacional",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "vite build",
+    "start": "node server/index.js",
+    "test": "node --test tests/*.test.js",
+    "db:init": "node server/database/init.js",
+    "db:seed-demo": "node scripts/seed-demo-data.mjs",
+    "db:schema": "node scripts/export-schema.mjs",
+    "test:api": "node scripts/verify-security-api.mjs",
+    "test:ui": "npm run build && node scripts/verify-security-ui.mjs",
+    "test:redesign": "npm run build && node scripts/verify-role-policy.mjs",
+    "evidence:redesign": "node scripts/build-redesign-evidence.mjs",
+    "test:recovery": "npm run build && node scripts/verify-security-recovery.mjs",
+    "test:portal": "npm run build && node scripts/verify-portal-cart.mjs",
+    "test:expansion": "npm run build && node scripts/verify-expansion.mjs",
+    "test:history": "node scripts/verify-history-api.mjs",
+    "evidence:operation": "node scripts/build-operation-evidence.mjs",
+    "test:flows": "node --test tests/operations.test.js",
+    "evidence": "node scripts/build-expansion-evidence.mjs",
+    "test:roles": "npm run build && node scripts/verify-role-policy.mjs",
+    "test:retail": "npm run build && node scripts/verify-retail.mjs"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "exceljs": "^4.4.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "jsqr": "^1.4.0",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.468.0",
+    "otpauth": "^9.5.2",
+    "pdfkit": "^0.20.2",
+    "pg": "^8.16.3",
+    "qrcode": "^1.5.4",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-leaflet": "^5.0.0",
+    "swagger-ui-express": "^5.0.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@playwright/test": "^1.63.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "prettier": "^3.9.9",
+    "vite": "^7.1.0"
+  }
+}

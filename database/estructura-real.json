@@ -1,0 +1,5580 @@
+{
+  "generated": "2026-11-14T04:38:44.727Z",
+  "tables": [
+    {
+      "table": "asset_depreciation",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "period",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "original_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "depreciation_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "net_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "asset_incidents",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "asset_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "required": true,
+          "default_value": "'Reportada'::text"
+        },
+        {
+          "name": "resolution",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "resolved_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "resolved_by",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "assets",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "code",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "value_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "acquired_on",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "useful_life_months",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "required": true,
+          "default_value": "'Activo'::text"
+        },
+        {
+          "name": "deactivated_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivated_by",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivation_reason",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "audit_head",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "sequence",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "last_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "audit_log",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "user_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "action",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "entity",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "entity_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "details",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "sequence",
+          "type": "integer",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "previous_hash",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "current_hash",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "role_code",
+          "type": "text",
+          "required": true,
+          "default_value": "'legacy'::text"
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "before_value",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "after_value",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "ip",
+          "type": "text",
+          "required": true,
+          "default_value": "'local'::text"
+        }
+      ]
+    },
+    {
+      "table": "auth_challenges",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "user_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "token_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "secret_cipher",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "expires_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "consumed",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        }
+      ]
+    },
+    {
+      "table": "branches",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "department",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "address",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "type",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lat",
+          "type": "double precision",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lng",
+          "type": "double precision",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "active",
+          "type": "integer",
+          "required": true,
+          "default_value": "1"
+        },
+        {
+          "name": "opens_at",
+          "type": "text",
+          "required": true,
+          "default_value": "'07:00'::text"
+        },
+        {
+          "name": "closes_at",
+          "type": "text",
+          "required": true,
+          "default_value": "'22:00'::text"
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "required": true,
+          "default_value": "'Activo'::text"
+        },
+        {
+          "name": "deactivated_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivated_by",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivation_reason",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "cash_movements",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "kind",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "amount_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "method",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "cash_shifts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "user_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "opening_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "opened_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "closed_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "expected_cents",
+          "type": "integer",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "counted_cents",
+          "type": "integer",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "difference_cents",
+          "type": "integer",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "required": true,
+          "default_value": "'Abierto'::text"
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "required": true,
+          "default_value": "''::text"
+        }
+      ]
+    },
+    {
+      "table": "client_addresses",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "client_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "address",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lat",
+          "type": "double precision",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lng",
+          "type": "double precision",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "clients",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "nit",
+          "type": "text",
+          "required": true,
+          "default_value": "'CF'::text"
+        },
+        {
+          "name": "cui_cipher",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "address",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lat",
+          "type": "double precision",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lng",
+          "type": "double precision",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "required": true,
+          "default_value": "'Activo'::text"
+        },
+        {
+          "name": "deactivated_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivated_by",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivation_reason",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "counter_sales",
+      "columns": [
+        {
+          "name": "request_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "payload_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "order_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "delivery_assignments",
+      "columns": [
+        {
+          "name": "order_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "courier_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "required": true,
+          "default_value": "'Asignado'::text"
+        },
+        {
+          "name": "lat",
+          "type": "double precision",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "lng",
+          "type": "double precision",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "accuracy",
+          "type": "double precision",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "location_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "location_source",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "assigned_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "assigned_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "delivery_points",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "order_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lat",
+          "type": "double precision",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lng",
+          "type": "double precision",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "accuracy",
+          "type": "double precision",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "user_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "employees",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "position",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "salary_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "active",
+          "type": "integer",
+          "required": true,
+          "default_value": "1"
+        },
+        {
+          "name": "salary_cipher",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "required": true,
+          "default_value": "'Activo'::text"
+        },
+        {
+          "name": "user_id",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivated_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivated_by",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivation_reason",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "entity_history",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "entity",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "entity_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "event",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "details",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "inventory",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lot",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "expires_on",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "minimum",
+          "type": "integer",
+          "required": true,
+          "default_value": "20"
+        }
+      ]
+    },
+    {
+      "table": "inventory_costs",
+      "columns": [
+        {
+          "name": "inventory_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "unit_cost_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "known",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        }
+      ]
+    },
+    {
+      "table": "order_item_costs",
+      "columns": [
+        {
+          "name": "item_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "unit_cost_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "known",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        }
+      ]
+    },
+    {
+      "table": "order_items",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "order_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "inventory_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "unit_price_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "orders",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "customer",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "address",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lat",
+          "type": "double precision",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lng",
+          "type": "double precision",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "payment",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "total_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "eta_minutes",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "prescription_confirmed",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "delivered_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "client_id",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "channel",
+          "type": "text",
+          "required": true,
+          "default_value": "'telefono'::text"
+        },
+        {
+          "name": "nit",
+          "type": "text",
+          "required": true,
+          "default_value": "'CF'::text"
+        },
+        {
+          "name": "prescription_id",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "discount_percent",
+          "type": "double precision",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "fulfillment",
+          "type": "text",
+          "required": true,
+          "default_value": "'delivery'::text"
+        }
+      ]
+    },
+    {
+      "table": "payroll",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "employee_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "period",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "gross_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "deductions_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "net_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "required": true,
+          "default_value": "'Pagado'::text"
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "payroll_benefits",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "employee_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "kind",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "period",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "amount_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "payroll_details",
+      "columns": [
+        {
+          "name": "payroll_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "breakdown_cipher",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "payroll_inputs",
+      "columns": [
+        {
+          "name": "employee_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "period",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "days",
+          "type": "integer",
+          "required": true,
+          "default_value": "30"
+        },
+        {
+          "name": "bonus_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "overtime_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "isr_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "other_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "other_reason",
+          "type": "text",
+          "required": true,
+          "default_value": "''::text"
+        },
+        {
+          "name": "social_security",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        }
+      ]
+    },
+    {
+      "table": "payroll_rules",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "settings",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "updated_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "updated_by",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "permissions",
+      "columns": [
+        {
+          "name": "code",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "portal_access_guards",
+      "columns": [
+        {
+          "name": "ticket",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "attempts",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "locked_until",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "portal_cancellations",
+      "columns": [
+        {
+          "name": "order_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "phone_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "dpi_hash",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "portal_clients",
+      "columns": [
+        {
+          "name": "dpi_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "client_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "portal_credentials",
+      "columns": [
+        {
+          "name": "order_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "code_cipher",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "portal_orders",
+      "columns": [
+        {
+          "name": "order_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "ticket",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "access_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "request_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "payload_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "ready_estimate",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "expires_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "portal_prescriptions",
+      "columns": [
+        {
+          "name": "order_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "image_cipher",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "mime",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "review_status",
+          "type": "text",
+          "required": true,
+          "default_value": "'Pendiente'::text"
+        },
+        {
+          "name": "reviewed_by",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "reviewed_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "required": true,
+          "default_value": "''::text"
+        }
+      ]
+    },
+    {
+      "table": "prescription_versions",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "order_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "image_cipher",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "mime",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "review_status",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "reviewed_by",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "reviewed_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "prescriptions",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "customer_name",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "doctor",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "license",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "issued_on",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "required": true,
+          "default_value": "''::text"
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "procurement_actions",
+      "columns": [
+        {
+          "name": "request_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "entity_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "payload_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "products",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "sku",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "price_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "prescription",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "controlled",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "required": true,
+          "default_value": "'Activo'::text"
+        },
+        {
+          "name": "deactivated_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivated_by",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivation_reason",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "component",
+          "type": "text",
+          "required": true,
+          "default_value": "''::text"
+        }
+      ]
+    },
+    {
+      "table": "purchase_lines",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "purchase_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "unit_cost_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "received",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        }
+      ]
+    },
+    {
+      "table": "purchase_orders",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "supplier_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "required": true,
+          "default_value": "'Borrador'::text"
+        },
+        {
+          "name": "payment",
+          "type": "text",
+          "required": true,
+          "default_value": "'Transferencia'::text"
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "required": true,
+          "default_value": "''::text"
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "purchase_receipts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "purchase_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "line_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "inventory_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "unit_cost_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "returned",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "document",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "recovery_codes",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "user_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "code_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "used_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "requests",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "type",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "entity_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "payload",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "requester_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "approver_id",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "required": true,
+          "default_value": "'Pendiente'::text"
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "decision_reason",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "resolved_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "role_permissions",
+      "columns": [
+        {
+          "name": "role_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "permission_code",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "roles",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "code",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": true,
+          "default_value": "''::text"
+        },
+        {
+          "name": "scope",
+          "type": "text",
+          "required": true,
+          "default_value": "'all'::text"
+        },
+        {
+          "name": "require_totp",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        }
+      ]
+    },
+    {
+      "table": "salary_history",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "employee_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "salary_cipher",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "schema_migrations",
+      "columns": [
+        {
+          "name": "version",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "applied_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "sessions",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "user_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "refresh_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "csrf_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "ip",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "expires_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "last_seen",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "revoked",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        }
+      ]
+    },
+    {
+      "table": "simulated_messages",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "phone_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "phone_cipher",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "order_id",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "kind",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "text_cipher",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "read_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "stock_ledger",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "inventory_id",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "type",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "reference_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "user_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "supplier_returns",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "receipt_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "amount_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "credit_note",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "required": true,
+          "default_value": "'Pendiente de reembolso'::text"
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "suppliers",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "nit",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "email",
+          "type": "text",
+          "required": true,
+          "default_value": "''::text"
+        },
+        {
+          "name": "address",
+          "type": "text",
+          "required": true,
+          "default_value": "''::text"
+        },
+        {
+          "name": "active",
+          "type": "integer",
+          "required": true,
+          "default_value": "1"
+        }
+      ]
+    },
+    {
+      "table": "transfer_costs",
+      "columns": [
+        {
+          "name": "transfer_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "unit_cost_cents",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "known",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        }
+      ]
+    },
+    {
+      "table": "transfer_drafts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "inventory_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "destination_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "required": true,
+          "default_value": "'Borrador'::text"
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "transfers",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "source_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "destination_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "lot",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "expires_on",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "received_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "received_quantity",
+          "type": "integer",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "difference_reason",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "used_refresh_tokens",
+      "columns": [
+        {
+          "name": "token_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "session_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "users",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "email",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "password_hash",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "role",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "role_id",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "branch_id",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "required": true,
+          "default_value": "'Activo'::text"
+        },
+        {
+          "name": "failed_attempts",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "locked_until",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "must_change_password",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "totp_cipher",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "totp_enabled",
+          "type": "integer",
+          "required": true,
+          "default_value": "0"
+        },
+        {
+          "name": "last_totp_step",
+          "type": "integer",
+          "required": true,
+          "default_value": "'-1'::integer"
+        },
+        {
+          "name": "deactivated_at",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivated_by",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        },
+        {
+          "name": "deactivation_reason",
+          "type": "text",
+          "required": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "table": "voided_records",
+      "columns": [
+        {
+          "name": "id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "entity",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "entity_id",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_at",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        },
+        {
+          "name": "created_by",
+          "type": "text",
+          "required": true,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_asset_id_not_null",
+      "definition": "NOT NULL asset_id"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_asset_id_period_key",
+      "definition": "UNIQUE (asset_id, period)"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_depreciation_cents_not_null",
+      "definition": "NOT NULL depreciation_cents"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_net_cents_not_null",
+      "definition": "NOT NULL net_cents"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_original_cents_not_null",
+      "definition": "NOT NULL original_cents"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_period_not_null",
+      "definition": "NOT NULL period"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_asset_id_not_null",
+      "definition": "NOT NULL asset_id"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_branch_id_not_null",
+      "definition": "NOT NULL branch_id"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_description_not_null",
+      "definition": "NOT NULL description"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_status_not_null",
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_acquired_on_not_null",
+      "definition": "NOT NULL acquired_on"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_branch_id_not_null",
+      "definition": "NOT NULL branch_id"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_code_key",
+      "definition": "UNIQUE (code)"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_code_not_null",
+      "definition": "NOT NULL code"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_name_not_null",
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_status_not_null",
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_useful_life_months_check",
+      "definition": "CHECK ((useful_life_months > 0))"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_useful_life_months_not_null",
+      "definition": "NOT NULL useful_life_months"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_value_cents_check",
+      "definition": "CHECK ((value_cents > 0))"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_value_cents_not_null",
+      "definition": "NOT NULL value_cents"
+    },
+    {
+      "table_name": "audit_head",
+      "name": "audit_head_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "audit_head",
+      "name": "audit_head_last_hash_not_null",
+      "definition": "NOT NULL last_hash"
+    },
+    {
+      "table_name": "audit_head",
+      "name": "audit_head_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "audit_head",
+      "name": "audit_head_sequence_not_null",
+      "definition": "NOT NULL sequence"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_action_not_null",
+      "definition": "NOT NULL action"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_details_not_null",
+      "definition": "NOT NULL details"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_entity_id_not_null",
+      "definition": "NOT NULL entity_id"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_entity_not_null",
+      "definition": "NOT NULL entity"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_ip_not_null",
+      "definition": "NOT NULL ip"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_role_code_not_null",
+      "definition": "NOT NULL role_code"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_user_id_not_null",
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "auth_challenges",
+      "name": "auth_challenges_consumed_not_null",
+      "definition": "NOT NULL consumed"
+    },
+    {
+      "table_name": "auth_challenges",
+      "name": "auth_challenges_expires_at_not_null",
+      "definition": "NOT NULL expires_at"
+    },
+    {
+      "table_name": "auth_challenges",
+      "name": "auth_challenges_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "auth_challenges",
+      "name": "auth_challenges_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "auth_challenges",
+      "name": "auth_challenges_purpose_not_null",
+      "definition": "NOT NULL purpose"
+    },
+    {
+      "table_name": "auth_challenges",
+      "name": "auth_challenges_token_hash_key",
+      "definition": "UNIQUE (token_hash)"
+    },
+    {
+      "table_name": "auth_challenges",
+      "name": "auth_challenges_token_hash_not_null",
+      "definition": "NOT NULL token_hash"
+    },
+    {
+      "table_name": "auth_challenges",
+      "name": "auth_challenges_user_id_not_null",
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_active_not_null",
+      "definition": "NOT NULL active"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_address_not_null",
+      "definition": "NOT NULL address"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_closes_at_not_null",
+      "definition": "NOT NULL closes_at"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_department_not_null",
+      "definition": "NOT NULL department"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_lat_not_null",
+      "definition": "NOT NULL lat"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_lng_not_null",
+      "definition": "NOT NULL lng"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_name_not_null",
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_opens_at_not_null",
+      "definition": "NOT NULL opens_at"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_state_not_null",
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_type_check",
+      "definition": "CHECK ((type = ANY (ARRAY['Centro comercial'::text, 'Gasolinera'::text])))"
+    },
+    {
+      "table_name": "branches",
+      "name": "branches_type_not_null",
+      "definition": "NOT NULL type"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_amount_cents_check",
+      "definition": "CHECK ((amount_cents > 0))"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_amount_cents_not_null",
+      "definition": "NOT NULL amount_cents"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_branch_id_not_null",
+      "definition": "NOT NULL branch_id"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_category_not_null",
+      "definition": "NOT NULL category"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_description_not_null",
+      "definition": "NOT NULL description"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_kind_check",
+      "definition": "CHECK ((kind = ANY (ARRAY['Ingreso'::text, 'Egreso'::text])))"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_kind_not_null",
+      "definition": "NOT NULL kind"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_method_check",
+      "definition": "CHECK ((method = ANY (ARRAY['Efectivo'::text, 'Tarjeta'::text, 'Transferencia'::text])))"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_method_not_null",
+      "definition": "NOT NULL method"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "cash_shifts",
+      "name": "cash_shifts_branch_id_not_null",
+      "definition": "NOT NULL branch_id"
+    },
+    {
+      "table_name": "cash_shifts",
+      "name": "cash_shifts_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "cash_shifts",
+      "name": "cash_shifts_notes_not_null",
+      "definition": "NOT NULL notes"
+    },
+    {
+      "table_name": "cash_shifts",
+      "name": "cash_shifts_opened_at_not_null",
+      "definition": "NOT NULL opened_at"
+    },
+    {
+      "table_name": "cash_shifts",
+      "name": "cash_shifts_opening_cents_not_null",
+      "definition": "NOT NULL opening_cents"
+    },
+    {
+      "table_name": "cash_shifts",
+      "name": "cash_shifts_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "cash_shifts",
+      "name": "cash_shifts_state_not_null",
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "cash_shifts",
+      "name": "cash_shifts_user_id_not_null",
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "client_addresses",
+      "name": "client_addresses_address_not_null",
+      "definition": "NOT NULL address"
+    },
+    {
+      "table_name": "client_addresses",
+      "name": "client_addresses_client_id_not_null",
+      "definition": "NOT NULL client_id"
+    },
+    {
+      "table_name": "client_addresses",
+      "name": "client_addresses_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "client_addresses",
+      "name": "client_addresses_label_not_null",
+      "definition": "NOT NULL label"
+    },
+    {
+      "table_name": "client_addresses",
+      "name": "client_addresses_lat_not_null",
+      "definition": "NOT NULL lat"
+    },
+    {
+      "table_name": "client_addresses",
+      "name": "client_addresses_lng_not_null",
+      "definition": "NOT NULL lng"
+    },
+    {
+      "table_name": "client_addresses",
+      "name": "client_addresses_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "clients",
+      "name": "clients_address_not_null",
+      "definition": "NOT NULL address"
+    },
+    {
+      "table_name": "clients",
+      "name": "clients_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "clients",
+      "name": "clients_lat_not_null",
+      "definition": "NOT NULL lat"
+    },
+    {
+      "table_name": "clients",
+      "name": "clients_lng_not_null",
+      "definition": "NOT NULL lng"
+    },
+    {
+      "table_name": "clients",
+      "name": "clients_name_not_null",
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "clients",
+      "name": "clients_nit_not_null",
+      "definition": "NOT NULL nit"
+    },
+    {
+      "table_name": "clients",
+      "name": "clients_phone_not_null",
+      "definition": "NOT NULL phone"
+    },
+    {
+      "table_name": "clients",
+      "name": "clients_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "clients",
+      "name": "clients_state_not_null",
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "counter_sales",
+      "name": "counter_sales_order_id_not_null",
+      "definition": "NOT NULL order_id"
+    },
+    {
+      "table_name": "counter_sales",
+      "name": "counter_sales_payload_hash_not_null",
+      "definition": "NOT NULL payload_hash"
+    },
+    {
+      "table_name": "counter_sales",
+      "name": "counter_sales_pkey",
+      "definition": "PRIMARY KEY (request_id)"
+    },
+    {
+      "table_name": "counter_sales",
+      "name": "counter_sales_request_id_not_null",
+      "definition": "NOT NULL request_id"
+    },
+    {
+      "table_name": "delivery_assignments",
+      "name": "delivery_assignments_assigned_at_not_null",
+      "definition": "NOT NULL assigned_at"
+    },
+    {
+      "table_name": "delivery_assignments",
+      "name": "delivery_assignments_assigned_by_not_null",
+      "definition": "NOT NULL assigned_by"
+    },
+    {
+      "table_name": "delivery_assignments",
+      "name": "delivery_assignments_courier_id_not_null",
+      "definition": "NOT NULL courier_id"
+    },
+    {
+      "table_name": "delivery_assignments",
+      "name": "delivery_assignments_order_id_not_null",
+      "definition": "NOT NULL order_id"
+    },
+    {
+      "table_name": "delivery_assignments",
+      "name": "delivery_assignments_pkey",
+      "definition": "PRIMARY KEY (order_id)"
+    },
+    {
+      "table_name": "delivery_assignments",
+      "name": "delivery_assignments_status_not_null",
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "delivery_points",
+      "name": "delivery_points_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "delivery_points",
+      "name": "delivery_points_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "delivery_points",
+      "name": "delivery_points_lat_not_null",
+      "definition": "NOT NULL lat"
+    },
+    {
+      "table_name": "delivery_points",
+      "name": "delivery_points_lng_not_null",
+      "definition": "NOT NULL lng"
+    },
+    {
+      "table_name": "delivery_points",
+      "name": "delivery_points_order_id_not_null",
+      "definition": "NOT NULL order_id"
+    },
+    {
+      "table_name": "delivery_points",
+      "name": "delivery_points_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "delivery_points",
+      "name": "delivery_points_source_not_null",
+      "definition": "NOT NULL source"
+    },
+    {
+      "table_name": "delivery_points",
+      "name": "delivery_points_user_id_not_null",
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_active_not_null",
+      "definition": "NOT NULL active"
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_branch_id_not_null",
+      "definition": "NOT NULL branch_id"
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_name_not_null",
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_position_not_null",
+      "definition": "NOT NULL \"position\""
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_salary_cents_check",
+      "definition": "CHECK ((salary_cents > 0))"
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_salary_cents_not_null",
+      "definition": "NOT NULL salary_cents"
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_state_not_null",
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "entity_history",
+      "name": "entity_history_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "entity_history",
+      "name": "entity_history_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "entity_history",
+      "name": "entity_history_details_not_null",
+      "definition": "NOT NULL details"
+    },
+    {
+      "table_name": "entity_history",
+      "name": "entity_history_entity_id_not_null",
+      "definition": "NOT NULL entity_id"
+    },
+    {
+      "table_name": "entity_history",
+      "name": "entity_history_entity_not_null",
+      "definition": "NOT NULL entity"
+    },
+    {
+      "table_name": "entity_history",
+      "name": "entity_history_event_not_null",
+      "definition": "NOT NULL event"
+    },
+    {
+      "table_name": "entity_history",
+      "name": "entity_history_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "entity_history",
+      "name": "entity_history_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_branch_id_not_null",
+      "definition": "NOT NULL branch_id"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_branch_id_product_id_lot_key",
+      "definition": "UNIQUE (branch_id, product_id, lot)"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_expires_on_not_null",
+      "definition": "NOT NULL expires_on"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_lot_not_null",
+      "definition": "NOT NULL lot"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_minimum_not_null",
+      "definition": "NOT NULL minimum"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_product_id_not_null",
+      "definition": "NOT NULL product_id"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_quantity_check",
+      "definition": "CHECK ((quantity >= 0))"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_quantity_not_null",
+      "definition": "NOT NULL quantity"
+    },
+    {
+      "table_name": "inventory_costs",
+      "name": "inventory_costs_inventory_id_not_null",
+      "definition": "NOT NULL inventory_id"
+    },
+    {
+      "table_name": "inventory_costs",
+      "name": "inventory_costs_known_not_null",
+      "definition": "NOT NULL known"
+    },
+    {
+      "table_name": "inventory_costs",
+      "name": "inventory_costs_pkey",
+      "definition": "PRIMARY KEY (inventory_id)"
+    },
+    {
+      "table_name": "inventory_costs",
+      "name": "inventory_costs_unit_cost_cents_not_null",
+      "definition": "NOT NULL unit_cost_cents"
+    },
+    {
+      "table_name": "order_item_costs",
+      "name": "order_item_costs_item_id_not_null",
+      "definition": "NOT NULL item_id"
+    },
+    {
+      "table_name": "order_item_costs",
+      "name": "order_item_costs_known_not_null",
+      "definition": "NOT NULL known"
+    },
+    {
+      "table_name": "order_item_costs",
+      "name": "order_item_costs_pkey",
+      "definition": "PRIMARY KEY (item_id)"
+    },
+    {
+      "table_name": "order_item_costs",
+      "name": "order_item_costs_unit_cost_cents_not_null",
+      "definition": "NOT NULL unit_cost_cents"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_inventory_id_not_null",
+      "definition": "NOT NULL inventory_id"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_order_id_not_null",
+      "definition": "NOT NULL order_id"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_product_id_not_null",
+      "definition": "NOT NULL product_id"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_quantity_check",
+      "definition": "CHECK ((quantity > 0))"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_quantity_not_null",
+      "definition": "NOT NULL quantity"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_unit_price_cents_not_null",
+      "definition": "NOT NULL unit_price_cents"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_address_not_null",
+      "definition": "NOT NULL address"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_branch_id_not_null",
+      "definition": "NOT NULL branch_id"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_channel_not_null",
+      "definition": "NOT NULL channel"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_customer_not_null",
+      "definition": "NOT NULL customer"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_discount_percent_check",
+      "definition": "CHECK (((discount_percent >= (0)::double precision) AND (discount_percent <= (50)::double precision)))"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_discount_percent_not_null",
+      "definition": "NOT NULL discount_percent"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_eta_minutes_not_null",
+      "definition": "NOT NULL eta_minutes"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_fulfillment_check",
+      "definition": "CHECK ((fulfillment = ANY (ARRAY['delivery'::text, 'pickup'::text])))"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_fulfillment_not_null",
+      "definition": "NOT NULL fulfillment"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_lat_not_null",
+      "definition": "NOT NULL lat"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_lng_not_null",
+      "definition": "NOT NULL lng"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_nit_not_null",
+      "definition": "NOT NULL nit"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_payment_check",
+      "definition": "CHECK ((payment = ANY (ARRAY['Efectivo'::text, 'Tarjeta'::text, 'Transferencia'::text])))"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_payment_not_null",
+      "definition": "NOT NULL payment"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_phone_not_null",
+      "definition": "NOT NULL phone"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_prescription_confirmed_not_null",
+      "definition": "NOT NULL prescription_confirmed"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_status_check",
+      "definition": "CHECK ((status = ANY (ARRAY['Pendiente'::text, 'Preparando'::text, 'En ruta'::text, 'Listo para recoger'::text, 'Entregado'::text, 'Cancelado'::text])))"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_status_not_null",
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_total_cents_check",
+      "definition": "CHECK ((total_cents > 0))"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_total_cents_not_null",
+      "definition": "NOT NULL total_cents"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_deductions_cents_not_null",
+      "definition": "NOT NULL deductions_cents"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_employee_id_not_null",
+      "definition": "NOT NULL employee_id"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_gross_cents_not_null",
+      "definition": "NOT NULL gross_cents"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_net_cents_check",
+      "definition": "CHECK ((net_cents > 0))"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_net_cents_not_null",
+      "definition": "NOT NULL net_cents"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_period_not_null",
+      "definition": "NOT NULL period"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_state_not_null",
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_amount_cents_check",
+      "definition": "CHECK ((amount_cents > 0))"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_amount_cents_not_null",
+      "definition": "NOT NULL amount_cents"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_employee_id_kind_period_key",
+      "definition": "UNIQUE (employee_id, kind, period)"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_employee_id_not_null",
+      "definition": "NOT NULL employee_id"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_kind_not_null",
+      "definition": "NOT NULL kind"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_period_not_null",
+      "definition": "NOT NULL period"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_reason_not_null",
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table_name": "payroll_details",
+      "name": "payroll_details_breakdown_cipher_not_null",
+      "definition": "NOT NULL breakdown_cipher"
+    },
+    {
+      "table_name": "payroll_details",
+      "name": "payroll_details_payroll_id_not_null",
+      "definition": "NOT NULL payroll_id"
+    },
+    {
+      "table_name": "payroll_details",
+      "name": "payroll_details_pkey",
+      "definition": "PRIMARY KEY (payroll_id)"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_bonus_cents_not_null",
+      "definition": "NOT NULL bonus_cents"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_days_not_null",
+      "definition": "NOT NULL days"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_employee_id_not_null",
+      "definition": "NOT NULL employee_id"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_isr_cents_not_null",
+      "definition": "NOT NULL isr_cents"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_other_cents_not_null",
+      "definition": "NOT NULL other_cents"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_other_reason_not_null",
+      "definition": "NOT NULL other_reason"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_overtime_cents_not_null",
+      "definition": "NOT NULL overtime_cents"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_period_not_null",
+      "definition": "NOT NULL period"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_pkey",
+      "definition": "PRIMARY KEY (employee_id, period)"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_social_security_not_null",
+      "definition": "NOT NULL social_security"
+    },
+    {
+      "table_name": "payroll_rules",
+      "name": "payroll_rules_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "payroll_rules",
+      "name": "payroll_rules_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "payroll_rules",
+      "name": "payroll_rules_settings_not_null",
+      "definition": "NOT NULL settings"
+    },
+    {
+      "table_name": "payroll_rules",
+      "name": "payroll_rules_updated_at_not_null",
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "permissions",
+      "name": "permissions_code_not_null",
+      "definition": "NOT NULL code"
+    },
+    {
+      "table_name": "permissions",
+      "name": "permissions_description_not_null",
+      "definition": "NOT NULL description"
+    },
+    {
+      "table_name": "permissions",
+      "name": "permissions_pkey",
+      "definition": "PRIMARY KEY (code)"
+    },
+    {
+      "table_name": "portal_access_guards",
+      "name": "portal_access_guards_attempts_not_null",
+      "definition": "NOT NULL attempts"
+    },
+    {
+      "table_name": "portal_access_guards",
+      "name": "portal_access_guards_pkey",
+      "definition": "PRIMARY KEY (ticket)"
+    },
+    {
+      "table_name": "portal_access_guards",
+      "name": "portal_access_guards_ticket_not_null",
+      "definition": "NOT NULL ticket"
+    },
+    {
+      "table_name": "portal_cancellations",
+      "name": "portal_cancellations_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "portal_cancellations",
+      "name": "portal_cancellations_order_id_not_null",
+      "definition": "NOT NULL order_id"
+    },
+    {
+      "table_name": "portal_cancellations",
+      "name": "portal_cancellations_phone_hash_not_null",
+      "definition": "NOT NULL phone_hash"
+    },
+    {
+      "table_name": "portal_cancellations",
+      "name": "portal_cancellations_pkey",
+      "definition": "PRIMARY KEY (order_id)"
+    },
+    {
+      "table_name": "portal_cancellations",
+      "name": "portal_cancellations_reason_not_null",
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table_name": "portal_clients",
+      "name": "portal_clients_client_id_key",
+      "definition": "UNIQUE (client_id)"
+    },
+    {
+      "table_name": "portal_clients",
+      "name": "portal_clients_client_id_not_null",
+      "definition": "NOT NULL client_id"
+    },
+    {
+      "table_name": "portal_clients",
+      "name": "portal_clients_dpi_hash_not_null",
+      "definition": "NOT NULL dpi_hash"
+    },
+    {
+      "table_name": "portal_clients",
+      "name": "portal_clients_pkey",
+      "definition": "PRIMARY KEY (dpi_hash)"
+    },
+    {
+      "table_name": "portal_credentials",
+      "name": "portal_credentials_code_cipher_not_null",
+      "definition": "NOT NULL code_cipher"
+    },
+    {
+      "table_name": "portal_credentials",
+      "name": "portal_credentials_order_id_not_null",
+      "definition": "NOT NULL order_id"
+    },
+    {
+      "table_name": "portal_credentials",
+      "name": "portal_credentials_pkey",
+      "definition": "PRIMARY KEY (order_id)"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_access_hash_not_null",
+      "definition": "NOT NULL access_hash"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_order_id_not_null",
+      "definition": "NOT NULL order_id"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_payload_hash_not_null",
+      "definition": "NOT NULL payload_hash"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_pkey",
+      "definition": "PRIMARY KEY (order_id)"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_ready_estimate_not_null",
+      "definition": "NOT NULL ready_estimate"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_request_hash_key",
+      "definition": "UNIQUE (request_hash)"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_request_hash_not_null",
+      "definition": "NOT NULL request_hash"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_ticket_key",
+      "definition": "UNIQUE (ticket)"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_ticket_not_null",
+      "definition": "NOT NULL ticket"
+    },
+    {
+      "table_name": "portal_prescriptions",
+      "name": "portal_prescriptions_image_cipher_not_null",
+      "definition": "NOT NULL image_cipher"
+    },
+    {
+      "table_name": "portal_prescriptions",
+      "name": "portal_prescriptions_mime_not_null",
+      "definition": "NOT NULL mime"
+    },
+    {
+      "table_name": "portal_prescriptions",
+      "name": "portal_prescriptions_notes_not_null",
+      "definition": "NOT NULL notes"
+    },
+    {
+      "table_name": "portal_prescriptions",
+      "name": "portal_prescriptions_order_id_not_null",
+      "definition": "NOT NULL order_id"
+    },
+    {
+      "table_name": "portal_prescriptions",
+      "name": "portal_prescriptions_pkey",
+      "definition": "PRIMARY KEY (order_id)"
+    },
+    {
+      "table_name": "portal_prescriptions",
+      "name": "portal_prescriptions_review_status_not_null",
+      "definition": "NOT NULL review_status"
+    },
+    {
+      "table_name": "prescription_versions",
+      "name": "prescription_versions_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "prescription_versions",
+      "name": "prescription_versions_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "prescription_versions",
+      "name": "prescription_versions_image_cipher_not_null",
+      "definition": "NOT NULL image_cipher"
+    },
+    {
+      "table_name": "prescription_versions",
+      "name": "prescription_versions_mime_not_null",
+      "definition": "NOT NULL mime"
+    },
+    {
+      "table_name": "prescription_versions",
+      "name": "prescription_versions_notes_not_null",
+      "definition": "NOT NULL notes"
+    },
+    {
+      "table_name": "prescription_versions",
+      "name": "prescription_versions_order_id_not_null",
+      "definition": "NOT NULL order_id"
+    },
+    {
+      "table_name": "prescription_versions",
+      "name": "prescription_versions_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "prescription_versions",
+      "name": "prescription_versions_review_status_not_null",
+      "definition": "NOT NULL review_status"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_customer_name_not_null",
+      "definition": "NOT NULL customer_name"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_doctor_not_null",
+      "definition": "NOT NULL doctor"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_issued_on_not_null",
+      "definition": "NOT NULL issued_on"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_license_not_null",
+      "definition": "NOT NULL license"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_notes_not_null",
+      "definition": "NOT NULL notes"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_product_id_not_null",
+      "definition": "NOT NULL product_id"
+    },
+    {
+      "table_name": "procurement_actions",
+      "name": "procurement_actions_entity_id_not_null",
+      "definition": "NOT NULL entity_id"
+    },
+    {
+      "table_name": "procurement_actions",
+      "name": "procurement_actions_payload_hash_not_null",
+      "definition": "NOT NULL payload_hash"
+    },
+    {
+      "table_name": "procurement_actions",
+      "name": "procurement_actions_pkey",
+      "definition": "PRIMARY KEY (request_id)"
+    },
+    {
+      "table_name": "procurement_actions",
+      "name": "procurement_actions_request_id_not_null",
+      "definition": "NOT NULL request_id"
+    },
+    {
+      "table_name": "products",
+      "name": "products_category_not_null",
+      "definition": "NOT NULL category"
+    },
+    {
+      "table_name": "products",
+      "name": "products_component_not_null",
+      "definition": "NOT NULL component"
+    },
+    {
+      "table_name": "products",
+      "name": "products_controlled_not_null",
+      "definition": "NOT NULL controlled"
+    },
+    {
+      "table_name": "products",
+      "name": "products_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "products",
+      "name": "products_name_not_null",
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "products",
+      "name": "products_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "products",
+      "name": "products_prescription_not_null",
+      "definition": "NOT NULL prescription"
+    },
+    {
+      "table_name": "products",
+      "name": "products_price_cents_check",
+      "definition": "CHECK ((price_cents >= 0))"
+    },
+    {
+      "table_name": "products",
+      "name": "products_price_cents_not_null",
+      "definition": "NOT NULL price_cents"
+    },
+    {
+      "table_name": "products",
+      "name": "products_sku_key",
+      "definition": "UNIQUE (sku)"
+    },
+    {
+      "table_name": "products",
+      "name": "products_sku_not_null",
+      "definition": "NOT NULL sku"
+    },
+    {
+      "table_name": "products",
+      "name": "products_state_not_null",
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_product_id_not_null",
+      "definition": "NOT NULL product_id"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_purchase_id_not_null",
+      "definition": "NOT NULL purchase_id"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_purchase_id_product_id_key",
+      "definition": "UNIQUE (purchase_id, product_id)"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_quantity_check",
+      "definition": "CHECK ((quantity > 0))"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_quantity_not_null",
+      "definition": "NOT NULL quantity"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_received_not_null",
+      "definition": "NOT NULL received"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_unit_cost_cents_check",
+      "definition": "CHECK ((unit_cost_cents > 0))"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_unit_cost_cents_not_null",
+      "definition": "NOT NULL unit_cost_cents"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_branch_id_not_null",
+      "definition": "NOT NULL branch_id"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_notes_not_null",
+      "definition": "NOT NULL notes"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_payment_not_null",
+      "definition": "NOT NULL payment"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_status_not_null",
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_supplier_id_not_null",
+      "definition": "NOT NULL supplier_id"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_document_not_null",
+      "definition": "NOT NULL document"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_inventory_id_not_null",
+      "definition": "NOT NULL inventory_id"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_line_id_not_null",
+      "definition": "NOT NULL line_id"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_purchase_id_not_null",
+      "definition": "NOT NULL purchase_id"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_quantity_check",
+      "definition": "CHECK ((quantity > 0))"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_quantity_not_null",
+      "definition": "NOT NULL quantity"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_returned_not_null",
+      "definition": "NOT NULL returned"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_unit_cost_cents_not_null",
+      "definition": "NOT NULL unit_cost_cents"
+    },
+    {
+      "table_name": "recovery_codes",
+      "name": "recovery_codes_code_hash_key",
+      "definition": "UNIQUE (code_hash)"
+    },
+    {
+      "table_name": "recovery_codes",
+      "name": "recovery_codes_code_hash_not_null",
+      "definition": "NOT NULL code_hash"
+    },
+    {
+      "table_name": "recovery_codes",
+      "name": "recovery_codes_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "recovery_codes",
+      "name": "recovery_codes_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "recovery_codes",
+      "name": "recovery_codes_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "recovery_codes",
+      "name": "recovery_codes_user_id_not_null",
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_entity_id_not_null",
+      "definition": "NOT NULL entity_id"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_payload_not_null",
+      "definition": "NOT NULL payload"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_reason_not_null",
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_requester_id_not_null",
+      "definition": "NOT NULL requester_id"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_status_not_null",
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_type_not_null",
+      "definition": "NOT NULL type"
+    },
+    {
+      "table_name": "role_permissions",
+      "name": "role_permissions_permission_code_not_null",
+      "definition": "NOT NULL permission_code"
+    },
+    {
+      "table_name": "role_permissions",
+      "name": "role_permissions_pkey",
+      "definition": "PRIMARY KEY (role_id, permission_code)"
+    },
+    {
+      "table_name": "role_permissions",
+      "name": "role_permissions_role_id_not_null",
+      "definition": "NOT NULL role_id"
+    },
+    {
+      "table_name": "roles",
+      "name": "roles_code_key",
+      "definition": "UNIQUE (code)"
+    },
+    {
+      "table_name": "roles",
+      "name": "roles_code_not_null",
+      "definition": "NOT NULL code"
+    },
+    {
+      "table_name": "roles",
+      "name": "roles_description_not_null",
+      "definition": "NOT NULL description"
+    },
+    {
+      "table_name": "roles",
+      "name": "roles_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "roles",
+      "name": "roles_name_not_null",
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "roles",
+      "name": "roles_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "roles",
+      "name": "roles_require_totp_not_null",
+      "definition": "NOT NULL require_totp"
+    },
+    {
+      "table_name": "roles",
+      "name": "roles_scope_not_null",
+      "definition": "NOT NULL scope"
+    },
+    {
+      "table_name": "salary_history",
+      "name": "salary_history_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "salary_history",
+      "name": "salary_history_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "salary_history",
+      "name": "salary_history_employee_id_not_null",
+      "definition": "NOT NULL employee_id"
+    },
+    {
+      "table_name": "salary_history",
+      "name": "salary_history_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "salary_history",
+      "name": "salary_history_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "salary_history",
+      "name": "salary_history_reason_not_null",
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table_name": "salary_history",
+      "name": "salary_history_salary_cipher_not_null",
+      "definition": "NOT NULL salary_cipher"
+    },
+    {
+      "table_name": "schema_migrations",
+      "name": "schema_migrations_applied_at_not_null",
+      "definition": "NOT NULL applied_at"
+    },
+    {
+      "table_name": "schema_migrations",
+      "name": "schema_migrations_pkey",
+      "definition": "PRIMARY KEY (version)"
+    },
+    {
+      "table_name": "schema_migrations",
+      "name": "schema_migrations_version_not_null",
+      "definition": "NOT NULL version"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_csrf_hash_not_null",
+      "definition": "NOT NULL csrf_hash"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_expires_at_not_null",
+      "definition": "NOT NULL expires_at"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_ip_not_null",
+      "definition": "NOT NULL ip"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_last_seen_not_null",
+      "definition": "NOT NULL last_seen"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_refresh_hash_key",
+      "definition": "UNIQUE (refresh_hash)"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_refresh_hash_not_null",
+      "definition": "NOT NULL refresh_hash"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_revoked_not_null",
+      "definition": "NOT NULL revoked"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_user_id_not_null",
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "simulated_messages",
+      "name": "simulated_messages_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "simulated_messages",
+      "name": "simulated_messages_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "simulated_messages",
+      "name": "simulated_messages_kind_not_null",
+      "definition": "NOT NULL kind"
+    },
+    {
+      "table_name": "simulated_messages",
+      "name": "simulated_messages_phone_cipher_not_null",
+      "definition": "NOT NULL phone_cipher"
+    },
+    {
+      "table_name": "simulated_messages",
+      "name": "simulated_messages_phone_hash_not_null",
+      "definition": "NOT NULL phone_hash"
+    },
+    {
+      "table_name": "simulated_messages",
+      "name": "simulated_messages_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "simulated_messages",
+      "name": "simulated_messages_text_cipher_not_null",
+      "definition": "NOT NULL text_cipher"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_branch_id_not_null",
+      "definition": "NOT NULL branch_id"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_product_id_not_null",
+      "definition": "NOT NULL product_id"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_quantity_not_null",
+      "definition": "NOT NULL quantity"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_reason_not_null",
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_reference_id_not_null",
+      "definition": "NOT NULL reference_id"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_type_not_null",
+      "definition": "NOT NULL type"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_user_id_not_null",
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_amount_cents_not_null",
+      "definition": "NOT NULL amount_cents"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_credit_note_not_null",
+      "definition": "NOT NULL credit_note"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_quantity_check",
+      "definition": "CHECK ((quantity > 0))"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_quantity_not_null",
+      "definition": "NOT NULL quantity"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_reason_not_null",
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_receipt_id_not_null",
+      "definition": "NOT NULL receipt_id"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_status_not_null",
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "suppliers",
+      "name": "suppliers_active_not_null",
+      "definition": "NOT NULL active"
+    },
+    {
+      "table_name": "suppliers",
+      "name": "suppliers_address_not_null",
+      "definition": "NOT NULL address"
+    },
+    {
+      "table_name": "suppliers",
+      "name": "suppliers_email_not_null",
+      "definition": "NOT NULL email"
+    },
+    {
+      "table_name": "suppliers",
+      "name": "suppliers_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "suppliers",
+      "name": "suppliers_name_not_null",
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "suppliers",
+      "name": "suppliers_nit_not_null",
+      "definition": "NOT NULL nit"
+    },
+    {
+      "table_name": "suppliers",
+      "name": "suppliers_phone_not_null",
+      "definition": "NOT NULL phone"
+    },
+    {
+      "table_name": "suppliers",
+      "name": "suppliers_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "transfer_costs",
+      "name": "transfer_costs_known_not_null",
+      "definition": "NOT NULL known"
+    },
+    {
+      "table_name": "transfer_costs",
+      "name": "transfer_costs_pkey",
+      "definition": "PRIMARY KEY (transfer_id)"
+    },
+    {
+      "table_name": "transfer_costs",
+      "name": "transfer_costs_transfer_id_not_null",
+      "definition": "NOT NULL transfer_id"
+    },
+    {
+      "table_name": "transfer_costs",
+      "name": "transfer_costs_unit_cost_cents_not_null",
+      "definition": "NOT NULL unit_cost_cents"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_destination_id_not_null",
+      "definition": "NOT NULL destination_id"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_inventory_id_not_null",
+      "definition": "NOT NULL inventory_id"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_quantity_not_null",
+      "definition": "NOT NULL quantity"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_state_not_null",
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_check",
+      "definition": "CHECK ((source_id <> destination_id))"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_destination_id_not_null",
+      "definition": "NOT NULL destination_id"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_expires_on_not_null",
+      "definition": "NOT NULL expires_on"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_lot_not_null",
+      "definition": "NOT NULL lot"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_product_id_not_null",
+      "definition": "NOT NULL product_id"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_quantity_check",
+      "definition": "CHECK ((quantity > 0))"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_quantity_not_null",
+      "definition": "NOT NULL quantity"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_source_id_not_null",
+      "definition": "NOT NULL source_id"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_status_check",
+      "definition": "CHECK ((status = ANY (ARRAY['En tránsito'::text, 'Recibido'::text])))"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_status_not_null",
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "used_refresh_tokens",
+      "name": "used_refresh_tokens_pkey",
+      "definition": "PRIMARY KEY (token_hash)"
+    },
+    {
+      "table_name": "used_refresh_tokens",
+      "name": "used_refresh_tokens_session_id_not_null",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table_name": "used_refresh_tokens",
+      "name": "used_refresh_tokens_token_hash_not_null",
+      "definition": "NOT NULL token_hash"
+    },
+    {
+      "table_name": "users",
+      "name": "users_email_key",
+      "definition": "UNIQUE (email)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_email_not_null",
+      "definition": "NOT NULL email"
+    },
+    {
+      "table_name": "users",
+      "name": "users_failed_attempts_not_null",
+      "definition": "NOT NULL failed_attempts"
+    },
+    {
+      "table_name": "users",
+      "name": "users_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "users",
+      "name": "users_last_totp_step_not_null",
+      "definition": "NOT NULL last_totp_step"
+    },
+    {
+      "table_name": "users",
+      "name": "users_must_change_password_not_null",
+      "definition": "NOT NULL must_change_password"
+    },
+    {
+      "table_name": "users",
+      "name": "users_name_not_null",
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "users",
+      "name": "users_password_hash_not_null",
+      "definition": "NOT NULL password_hash"
+    },
+    {
+      "table_name": "users",
+      "name": "users_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_role_check",
+      "definition": "CHECK ((role = ANY (ARRAY['admin'::text, 'operator'::text, 'auditor'::text])))"
+    },
+    {
+      "table_name": "users",
+      "name": "users_role_not_null",
+      "definition": "NOT NULL role"
+    },
+    {
+      "table_name": "users",
+      "name": "users_state_not_null",
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "users",
+      "name": "users_totp_enabled_not_null",
+      "definition": "NOT NULL totp_enabled"
+    },
+    {
+      "table_name": "voided_records",
+      "name": "voided_records_created_at_not_null",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "voided_records",
+      "name": "voided_records_created_by_not_null",
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "voided_records",
+      "name": "voided_records_entity_id_key",
+      "definition": "UNIQUE (entity_id)"
+    },
+    {
+      "table_name": "voided_records",
+      "name": "voided_records_entity_id_not_null",
+      "definition": "NOT NULL entity_id"
+    },
+    {
+      "table_name": "voided_records",
+      "name": "voided_records_entity_not_null",
+      "definition": "NOT NULL entity"
+    },
+    {
+      "table_name": "voided_records",
+      "name": "voided_records_id_not_null",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "voided_records",
+      "name": "voided_records_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "voided_records",
+      "name": "voided_records_reason_not_null",
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_asset_id_fkey",
+      "definition": "FOREIGN KEY (asset_id) REFERENCES assets(id)"
+    },
+    {
+      "table_name": "asset_depreciation",
+      "name": "asset_depreciation_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_asset_id_fkey",
+      "definition": "FOREIGN KEY (asset_id) REFERENCES assets(id)"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "asset_incidents",
+      "name": "asset_incidents_resolved_by_fkey",
+      "definition": "FOREIGN KEY (resolved_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "assets",
+      "name": "assets_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "audit_log",
+      "name": "audit_log_user_id_fkey",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "auth_challenges",
+      "name": "auth_challenges_user_id_fkey",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "cash_movements",
+      "name": "cash_movements_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "cash_shifts",
+      "name": "cash_shifts_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "cash_shifts",
+      "name": "cash_shifts_user_id_fkey",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "client_addresses",
+      "name": "client_addresses_client_id_fkey",
+      "definition": "FOREIGN KEY (client_id) REFERENCES clients(id)"
+    },
+    {
+      "table_name": "clients",
+      "name": "clients_deactivated_by_fkey",
+      "definition": "FOREIGN KEY (deactivated_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "counter_sales",
+      "name": "counter_sales_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "table_name": "delivery_assignments",
+      "name": "delivery_assignments_assigned_by_fkey",
+      "definition": "FOREIGN KEY (assigned_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "delivery_assignments",
+      "name": "delivery_assignments_courier_id_fkey",
+      "definition": "FOREIGN KEY (courier_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "delivery_assignments",
+      "name": "delivery_assignments_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "table_name": "delivery_points",
+      "name": "delivery_points_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "table_name": "delivery_points",
+      "name": "delivery_points_user_id_fkey",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "employees",
+      "name": "employees_user_id_fkey",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "entity_history",
+      "name": "entity_history_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "inventory",
+      "name": "inventory_product_id_fkey",
+      "definition": "FOREIGN KEY (product_id) REFERENCES products(id)"
+    },
+    {
+      "table_name": "inventory_costs",
+      "name": "inventory_costs_inventory_id_fkey",
+      "definition": "FOREIGN KEY (inventory_id) REFERENCES inventory(id)"
+    },
+    {
+      "table_name": "order_item_costs",
+      "name": "order_item_costs_item_id_fkey",
+      "definition": "FOREIGN KEY (item_id) REFERENCES order_items(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_inventory_id_fkey",
+      "definition": "FOREIGN KEY (inventory_id) REFERENCES inventory(id)"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "table_name": "order_items",
+      "name": "order_items_product_id_fkey",
+      "definition": "FOREIGN KEY (product_id) REFERENCES products(id)"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_client_id_fkey",
+      "definition": "FOREIGN KEY (client_id) REFERENCES clients(id)"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "orders",
+      "name": "orders_prescription_id_fkey",
+      "definition": "FOREIGN KEY (prescription_id) REFERENCES prescriptions(id)"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "payroll",
+      "name": "payroll_employee_id_fkey",
+      "definition": "FOREIGN KEY (employee_id) REFERENCES employees(id)"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "payroll_benefits",
+      "name": "payroll_benefits_employee_id_fkey",
+      "definition": "FOREIGN KEY (employee_id) REFERENCES employees(id)"
+    },
+    {
+      "table_name": "payroll_details",
+      "name": "payroll_details_payroll_id_fkey",
+      "definition": "FOREIGN KEY (payroll_id) REFERENCES payroll(id)"
+    },
+    {
+      "table_name": "payroll_inputs",
+      "name": "payroll_inputs_employee_id_fkey",
+      "definition": "FOREIGN KEY (employee_id) REFERENCES employees(id)"
+    },
+    {
+      "table_name": "payroll_rules",
+      "name": "payroll_rules_updated_by_fkey",
+      "definition": "FOREIGN KEY (updated_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "portal_cancellations",
+      "name": "portal_cancellations_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "table_name": "portal_clients",
+      "name": "portal_clients_client_id_fkey",
+      "definition": "FOREIGN KEY (client_id) REFERENCES clients(id)"
+    },
+    {
+      "table_name": "portal_credentials",
+      "name": "portal_credentials_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "table_name": "portal_orders",
+      "name": "portal_orders_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "table_name": "portal_prescriptions",
+      "name": "portal_prescriptions_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "table_name": "portal_prescriptions",
+      "name": "portal_prescriptions_reviewed_by_fkey",
+      "definition": "FOREIGN KEY (reviewed_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "prescription_versions",
+      "name": "prescription_versions_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "prescriptions",
+      "name": "prescriptions_product_id_fkey",
+      "definition": "FOREIGN KEY (product_id) REFERENCES products(id)"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_product_id_fkey",
+      "definition": "FOREIGN KEY (product_id) REFERENCES products(id)"
+    },
+    {
+      "table_name": "purchase_lines",
+      "name": "purchase_lines_purchase_id_fkey",
+      "definition": "FOREIGN KEY (purchase_id) REFERENCES purchase_orders(id)"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "purchase_orders",
+      "name": "purchase_orders_supplier_id_fkey",
+      "definition": "FOREIGN KEY (supplier_id) REFERENCES suppliers(id)"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_inventory_id_fkey",
+      "definition": "FOREIGN KEY (inventory_id) REFERENCES inventory(id)"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_line_id_fkey",
+      "definition": "FOREIGN KEY (line_id) REFERENCES purchase_lines(id)"
+    },
+    {
+      "table_name": "purchase_receipts",
+      "name": "purchase_receipts_purchase_id_fkey",
+      "definition": "FOREIGN KEY (purchase_id) REFERENCES purchase_orders(id)"
+    },
+    {
+      "table_name": "recovery_codes",
+      "name": "recovery_codes_user_id_fkey",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_approver_id_fkey",
+      "definition": "FOREIGN KEY (approver_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "requests",
+      "name": "requests_requester_id_fkey",
+      "definition": "FOREIGN KEY (requester_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "role_permissions",
+      "name": "role_permissions_permission_code_fkey",
+      "definition": "FOREIGN KEY (permission_code) REFERENCES permissions(code)"
+    },
+    {
+      "table_name": "role_permissions",
+      "name": "role_permissions_role_id_fkey",
+      "definition": "FOREIGN KEY (role_id) REFERENCES roles(id)"
+    },
+    {
+      "table_name": "salary_history",
+      "name": "salary_history_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "salary_history",
+      "name": "salary_history_employee_id_fkey",
+      "definition": "FOREIGN KEY (employee_id) REFERENCES employees(id)"
+    },
+    {
+      "table_name": "sessions",
+      "name": "sessions_user_id_fkey",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "simulated_messages",
+      "name": "simulated_messages_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_inventory_id_fkey",
+      "definition": "FOREIGN KEY (inventory_id) REFERENCES inventory(id)"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_product_id_fkey",
+      "definition": "FOREIGN KEY (product_id) REFERENCES products(id)"
+    },
+    {
+      "table_name": "stock_ledger",
+      "name": "stock_ledger_user_id_fkey",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id)"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "supplier_returns",
+      "name": "supplier_returns_receipt_id_fkey",
+      "definition": "FOREIGN KEY (receipt_id) REFERENCES purchase_receipts(id)"
+    },
+    {
+      "table_name": "transfer_costs",
+      "name": "transfer_costs_transfer_id_fkey",
+      "definition": "FOREIGN KEY (transfer_id) REFERENCES transfers(id)"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_destination_id_fkey",
+      "definition": "FOREIGN KEY (destination_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "transfer_drafts",
+      "name": "transfer_drafts_inventory_id_fkey",
+      "definition": "FOREIGN KEY (inventory_id) REFERENCES inventory(id)"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_destination_id_fkey",
+      "definition": "FOREIGN KEY (destination_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_product_id_fkey",
+      "definition": "FOREIGN KEY (product_id) REFERENCES products(id)"
+    },
+    {
+      "table_name": "transfers",
+      "name": "transfers_source_id_fkey",
+      "definition": "FOREIGN KEY (source_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "used_refresh_tokens",
+      "name": "used_refresh_tokens_session_id_fkey",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_branch_id_fkey",
+      "definition": "FOREIGN KEY (branch_id) REFERENCES branches(id)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_role_id_fkey",
+      "definition": "FOREIGN KEY (role_id) REFERENCES roles(id)"
+    },
+    {
+      "table_name": "voided_records",
+      "name": "voided_records_created_by_fkey",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id)"
+    }
+  ]
+}

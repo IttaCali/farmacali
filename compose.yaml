@@ -1,0 +1,32 @@
+services:
+  app:
+    build: .
+    ports:
+      - '3001:3001'
+    environment:
+      DATABASE_URL: postgres://farmared:${POSTGRES_PASSWORD:?Configura POSTGRES_PASSWORD en .env}@db:5432/farmared
+      JWT_SECRET: ${JWT_SECRET:?Configura JWT_SECRET en .env}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:?Configura ADMIN_EMAIL en .env}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Configura ADMIN_PASSWORD en .env}
+      DEMO_MODE: ${DEMO_MODE:-false}
+      DATA_ENCRYPTION_KEY: ${DATA_ENCRYPTION_KEY:?Configura DATA_ENCRYPTION_KEY en .env}
+      APP_ORIGIN: '${APP_ORIGIN:?Configura APP_ORIGIN con el origen HTTPS publicado}'
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: farmared
+      POSTGRES_USER: farmared
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Configura POSTGRES_PASSWORD en .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U farmared']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  pgdata:
