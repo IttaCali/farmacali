@@ -32,6 +32,15 @@ const requiredDpi = z
     (value) => validCui(value),
     'El CUI/DPI no es válido. Revisa el dígito verificador y los códigos de departamento y municipio.',
   );
+const guatemalaPhone = z
+  .string()
+  .trim()
+  .transform((value) => value.replace(/\D/g, ''))
+  .refine(
+    (value) => /^(?:502)?\d{8}$/.test(value),
+    'El teléfono debe tener el código +502 y exactamente 8 dígitos.',
+  )
+  .transform((value) => `+502${value.length === 11 ? value.slice(3) : value}`);
 const portalDpi = process.env.NODE_TEST_CONTEXT ? optionalDpi : requiredDpi;
 export const schemas = {
   assetIncident: z.object({ asset_id: key, description: text(1000) }),
@@ -346,8 +355,8 @@ export const schemas = {
   user: z.object({
     name: text(100),
     surname: text(100),
-    dpi: z.string().trim().regex(/^\d{13}$/, 'El DPI debe tener 13 dígitos.'),
-    phone: text(25),
+    dpi: requiredDpi,
+    phone: guatemalaPhone,
     birth_date: z.iso.date(),
     address: text(250),
     email: z.string().email().max(254).optional().or(z.literal('')).default(''),

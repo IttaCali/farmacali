@@ -22,6 +22,7 @@ import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { api, money, datetime, day, downloadReport } from '../lib/api';
 import { municipalityOptions } from '../lib/guatemala.js';
+import { validGuatemalanCui } from '../../shared/guatemalan-cui.js';
 import { Table, Panel, Modal, RecordForm, Badge, Empty, Stat } from './ui';
 const select = (items, labelKey = 'name') =>
   items.map((i) => ({ value: i.id, label: i[labelKey] }));
@@ -321,8 +322,43 @@ export function Operations({
     users: [
       text('name', 'Nombres'),
       { ...text('surname', 'Apellidos'), required: false },
-      { name: 'dpi', label: 'DPI / CUI', required: false, maxLength: 13, inputMode: 'numeric', placeholder: '13 dígitos' },
-      { name: 'phone', label: 'Teléfono celular', required: false, type: 'tel', placeholder: '####-####' },
+      {
+        name: 'dpi',
+        label: 'DPI / CUI',
+        required: false,
+        maxLength: 13,
+        inputMode: 'numeric',
+        placeholder: '13 dígitos',
+        normalize: (value) => value.replace(/\D/g, '').slice(0, 13),
+        validate: (value) =>
+          !value || validGuatemalanCui(value)
+            ? ''
+            : value.length !== 13
+              ? 'El DPI debe contener exactamente 13 dígitos.'
+              : 'El DPI no es válido. Revisa el dígito verificador, departamento y municipio.',
+        help: '13 dígitos con verificación de CUI de Guatemala.',
+      },
+      {
+        name: 'phone',
+        label: 'Teléfono celular',
+        required: false,
+        type: 'tel',
+        default: '+502 ',
+        maxLength: 13,
+        inputMode: 'numeric',
+        placeholder: '+502 55555555',
+        pattern: '\\+502 \\d{8}',
+        normalize: (value) => {
+          let digits = value.replace(/\D/g, '');
+          if (digits.length > 8 && digits.startsWith('502')) digits = digits.slice(3);
+          return `+502 ${digits.slice(0, 8)}`;
+        },
+        validate: (value) =>
+          /^\+502 \d{8}$/.test(value)
+            ? ''
+            : 'Escribe los 8 dígitos del celular después de +502.',
+        help: 'Código de Guatemala +502 y 8 dígitos.',
+      },
       { name: 'birth_date', label: 'Fecha de nacimiento', required: false, type: 'date' },
       { ...text('address', 'Domicilio', true), required: false },
       { name: 'email', label: 'Correo institucional', type: 'email' },

@@ -328,11 +328,13 @@ export function RecordForm({
     return next;
   });
   const [localErrors, setLocalErrors] = React.useState({});
-  function liveCheck(event, name) {
+  function liveCheck(event, field) {
     const input = event.currentTarget;
+    const customMessage = field.validate?.(input.value) || '';
+    input.setCustomValidity(customMessage);
     setLocalErrors((current) => ({
       ...current,
-      [name]: input.validity.valid ? '' : input.validationMessage,
+      [field.name]: input.validity.valid ? '' : input.validationMessage,
     }));
   }
   return (
@@ -361,9 +363,9 @@ export function RecordForm({
                       next[dependent.name] = options[0]?.value ?? '';
                   }
                   setValues(next);
-                  liveCheck(e, f.name);
+                  liveCheck(e, f);
                 }}
-                onBlur={(e) => liveCheck(e, f.name)}
+                onBlur={(e) => liveCheck(e, f)}
                 required={f.required !== false}
               >
                 {fieldOptions(f, values).map((o) => (
@@ -393,12 +395,15 @@ export function RecordForm({
                 step={f.step || (f.type === 'number' ? '1' : undefined)}
                 placeholder={f.placeholder}
                 inputMode={f.inputMode}
+                pattern={f.pattern}
                 required={f.required !== false}
                 onChange={(e) => {
-                  setValues({ ...values, [f.name]: e.target.value });
-                  liveCheck(e, f.name);
+                  const value = f.normalize ? f.normalize(e.target.value) : e.target.value;
+                  e.target.value = value;
+                  setValues({ ...values, [f.name]: value });
+                  liveCheck(e, f);
                 }}
-                onBlur={(e) => liveCheck(e, f.name)}
+                onBlur={(e) => liveCheck(e, f)}
               />
             )}
             {f.help && f.type !== 'checkbox' && <small className="field-help">{f.help}</small>}
