@@ -4,6 +4,7 @@ import { db } from './db.js';
 import { schema } from './schema.js';
 import { demoMode } from '../config.js';
 import { migrate } from './migrations.js';
+import { seedDemoCatalog } from './demo-catalog.js';
 export async function initialize(database = db) {
   for (const sql of schema) await database.query(sql);
   await database.transaction(async (q) => {
@@ -195,6 +196,8 @@ export async function initialize(database = db) {
     ]);
   });
   await migrate(database);
+  const catalog = await seedDemoCatalog(database);
+  if (!catalog.skipped) console.log('Catalogo demo cargado:', catalog);
 }
 if (process.argv[1]?.replaceAll('\\', '/').endsWith('/database/init.js')) {
   await initialize();
