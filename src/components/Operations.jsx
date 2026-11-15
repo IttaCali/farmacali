@@ -1563,8 +1563,25 @@ export function RoleDashboard({ data, user, onNavigate }) {
               { label: 'Ticket', render: (row) => row.ticket || row.id.slice(0, 8).toUpperCase() },
               { label: 'Tipo', render: ticketType },
               { label: 'Cliente', key: 'customer' },
-              { label: 'Atendió', render: (row) => row.attended_by_name || 'Sin identificar' },
-              { label: 'Rol', render: (row) => row.attended_by_role || 'Sin identificar' },
+              {
+                label: 'Call center',
+                render: (row) =>
+                  row.channel === 'mostrador'
+                    ? 'No aplica'
+                    : row.callcenter_name || 'Pendiente de identificar',
+              },
+              {
+                label: 'Repartidor',
+                render: (row) =>
+                  row.fulfillment === 'delivery'
+                    ? row.courier_name || 'Sin repartidor'
+                    : 'No aplica',
+              },
+              {
+                label: 'Responsable final',
+                render: (row) =>
+                  `${row.attended_by_name || 'Sin identificar'} · ${row.attended_by_role || 'Sin rol'}`,
+              },
               { label: 'Pago', key: 'payment' },
               { label: 'Total', render: (row) => money(row.total_cents) },
               { label: 'Finalizado', render: (row) => datetime(row.delivered_at) },
