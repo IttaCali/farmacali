@@ -110,6 +110,9 @@ router.get('/deliveries', async (req, res) => res.json(await delivery.list(req.u
 router.post('/deliveries/:id/assign', validate('deliveryAssign'), async (req, res) =>
   res.json(await delivery.assign(req.params.id, req.body, req.user)),
 );
+router.post('/deliveries/:id/progress', validate('deliveryProgress'), async (req, res) =>
+  res.json(await delivery.progress(req.params.id, req.body, req.user)),
+);
 router.post('/deliveries/:id/location', validate('deliveryLocation'), async (req, res) =>
   res.json(await delivery.location(req.params.id, req.body, req.user)),
 );

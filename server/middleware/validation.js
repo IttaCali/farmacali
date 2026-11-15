@@ -107,6 +107,7 @@ export const schemas = {
     credit_note: text(100),
   }),
   deliveryAssign: z.object({ courier_id: key }),
+  deliveryProgress: z.object({ action: z.enum(['pickup', 'route']) }),
   deliveryLocation: z.object({
     ...location,
     accuracy: number(0, 100000, false).optional(),

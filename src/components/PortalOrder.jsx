@@ -58,7 +58,9 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
     [error, setError] = useState(''),
     [message, setMessage] = useState(''),
     [busy, setBusy] = useState(false),
-    [notes, setNotes] = useState('');
+    [notes, setNotes] = useState(''),
+    [delivery, setDelivery] = useState(null),
+    [courier, setCourier] = useState(order.courier_id || '');
   const [packed, setPacked] = useState(false),
     [legacyRx, setLegacyRx] = useState(false),
     [paid, setPaid] = useState(false),
@@ -81,6 +83,9 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
     pickup = order.fulfillment === 'pickup',
     portal = order.channel === 'portal',
     done = ['Entregado', 'Cancelado'].includes(order.status);
+  const couriers = (delivery?.couriers || []).filter(
+    (candidate) => candidate.branch_id === order.branch_id,
+  );
   useEffect(() => {
     let active = true;
     api(`/orders/${order.id}/prescription`)
@@ -101,6 +106,17 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
     setCode(portal ? String(order.ticket || '') : '');
     setQr('');
   }, [order.status, order.ticket, portal]);
+  useEffect(() => setCourier(order.courier_id || ''), [order.courier_id]);
+  useEffect(() => {
+    if (pickup || !canManage) return undefined;
+    let active = true;
+    api('/deliveries')
+      .then((result) => active && setDelivery(result))
+      .catch((requestError) => active && setError(requestError.message));
+    return () => {
+      active = false;
+    };
+  }, [pickup, canManage, order.id]);
   async function run(path, body, method = 'POST', success = 'Operación registrada.') {
     setBusy(true);
     setError('');
@@ -177,7 +193,9 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
       : order.status === 'Preparando'
         ? pickup
           ? 'Marcar listo para recoger'
-          : 'Confirmar salida a domicilio'
+          : order.courier_id
+            ? 'Pedido asignado al repartidor'
+            : 'Entregar pedido al repartidor'
         : 'Confirmar entrega y cobro';
   const canReview =
     ['admin', 'callcenter'].includes(user.role) &&
@@ -187,6 +205,36 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
     e.preventDefault();
     if (blocked) {
       setError('Revisa y aprueba la receta antes de preparar este pedido.');
+      return;
+    }
+    if (!pickup && order.status === 'Preparando') {
+      if (!packed) {
+        setError('Confirma que revisaste y empacaste todos los medicamentos.');
+        return;
+      }
+      if (!courier) {
+        setError('Selecciona un repartidor de la sucursal.');
+        return;
+      }
+      await run(
+        `/deliveries/${order.id}/assign`,
+        { courier_id: courier },
+        'POST',
+        'Pedido entregado al repartidor. Ya aparece en su bandeja.',
+      );
+      return;
+    }
+    if (!pickup && order.status === 'En ruta') {
+      if (!order.courier_id && courier) {
+        await run(
+          `/deliveries/${order.id}/assign`,
+          { courier_id: courier },
+          'POST',
+          'Repartidor asignado. El pedido ya aparece en su bandeja.',
+        );
+        return;
+      }
+      setError('El repartidor asignado debe validar el ticket o QR para finalizar la entrega.');
       return;
     }
     if (next === 'Listo para recoger' && !packed) {
@@ -507,7 +555,7 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
               </strong>
               <p>
                 {order.status === 'Entregado'
-                  ? 'El pedido y su cobro ya quedaron registrados.'
+                  ? `El pedido y su cobro ya quedaron registrados${order.courier_name ? ` por ${order.courier_name}` : ''}.`
                   : 'Las existencias reservadas se liberaron.'}
               </p>
             </div>
@@ -520,8 +568,14 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
                     : order.status === 'Preparando'
                       ? pickup
                         ? 'Marca listo solo cuando todos los medicamentos estén en la bolsa, verificados e identificados con el ticket.'
-                        : 'Confirma que el pedido está preparado y sale hacia el domicilio del cliente.'
-                      : 'Verifica que el cliente reciba su pedido y confirma el cobro.'}
+                        : order.courier_id
+                          ? `El pedido fue asignado a ${order.courier_name}. Espera que confirme la recogida e inicie la ruta.`
+                          : 'Confirma el empaque y entrégalo a un repartidor activo de esta sucursal.'
+                      : !pickup
+                        ? order.courier_name
+                          ? `${order.courier_name} lleva el pedido. El repartidor validará el ticket o QR al entregarlo.`
+                          : 'Este pedido todavía necesita un repartidor asignado.'
+                        : 'Verifica que el cliente reciba su pedido y confirma el cobro.'}
                 </p>
                 {order.status === 'Pendiente' &&
                   needsReview &&
@@ -552,7 +606,8 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
                     Revisé la receta presentada por el cliente y es válida.
                   </label>
                 )}
-                {next === 'Listo para recoger' && (
+                {(next === 'Listo para recoger' ||
+                  (!pickup && order.status === 'Preparando' && !order.courier_id)) && (
                   <label className="order-checkbox">
                     <input
                       aria-label="Pedido empacado"
@@ -565,7 +620,29 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
                     bolsa.
                   </label>
                 )}
-                {next === 'Entregado' && portal && (
+                {!pickup &&
+                  ['Preparando', 'En ruta'].includes(order.status) &&
+                  !order.courier_id && (
+                    <label>
+                      Repartidor de {order.branch_name}
+                      <select
+                        required
+                        value={courier}
+                        onChange={(e) => setCourier(e.target.value)}
+                      >
+                        <option value="">Selecciona un repartidor</option>
+                        {couriers.map((candidate) => (
+                          <option value={candidate.id} key={candidate.id}>
+                            {[candidate.name, candidate.surname].filter(Boolean).join(' ')}
+                          </option>
+                        ))}
+                      </select>
+                      {!couriers.length && (
+                        <small>No hay repartidores activos asignados a esta sucursal.</small>
+                      )}
+                    </label>
+                  )}
+                {next === 'Entregado' && portal && pickup && (
                   <fieldset className="order-delivery-proof">
                     <legend>Confirmar entrega con ticket o QR</legend>
                     <div className="order-proof-tabs">
@@ -610,7 +687,7 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
                     )}
                   </fieldset>
                 )}
-                {next === 'Entregado' && (
+                {next === 'Entregado' && pickup && (
                   <label className="order-checkbox">
                     <input
                       aria-label="Entrega y cobro confirmados"
@@ -623,15 +700,24 @@ export function PortalOrderDetail({ order, data, user, onClose, onChanged }) {
                     mediante {order.payment}.
                   </label>
                 )}
-                <button
-                  className="primary-button order-next-action"
-                  disabled={
-                    busy || blocked || (next === 'Entregado' && portal && method === 'qr' && !qr)
-                  }
-                >
-                  {busy ? 'Guardando…' : nextLabel}
-                  <ChevronRight size={17} />
-                </button>
+                {!(!pickup && order.courier_id && ['Preparando', 'En ruta'].includes(order.status)) && (
+                  <button
+                    className="primary-button order-next-action"
+                    disabled={
+                      busy ||
+                      blocked ||
+                      (!pickup && ['Preparando', 'En ruta'].includes(order.status) && !courier) ||
+                      (next === 'Entregado' && portal && pickup && method === 'qr' && !qr)
+                    }
+                  >
+                    {busy
+                      ? 'Guardando…'
+                      : !pickup && order.status === 'En ruta' && !order.courier_id
+                        ? 'Asignar repartidor'
+                        : nextLabel}
+                    <ChevronRight size={17} />
+                  </button>
+                )}
               </form>
               <details className="order-cancel">
                 <summary>Cancelar pedido</summary>

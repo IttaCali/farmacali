@@ -111,7 +111,7 @@ export class Pharmacy {
       payroll:
         'SELECT p.*,e.name AS employee_name,b.name AS branch_name FROM payroll p JOIN employees e ON e.id=p.employee_id JOIN branches b ON b.id=p.branch_id ORDER BY p.period DESC,e.name',
       orders:
-        'SELECT o.*,b.name AS branch_name,creator.name AS created_by_name,courier.name AS courier_name,po.ticket,po.expires_at AS reservation_expires_at,rx.review_status AS uploaded_rx_status,CASE WHEN EXISTS(SELECT 1 FROM order_items oi JOIN products p ON p.id=oi.product_id WHERE oi.order_id=o.id AND p.prescription=1) THEN 1 ELSE 0 END AS needs_prescription FROM orders o JOIN branches b ON b.id=o.branch_id LEFT JOIN users creator ON creator.id=o.created_by LEFT JOIN delivery_assignments da ON da.order_id=o.id LEFT JOIN users courier ON courier.id=da.courier_id LEFT JOIN portal_orders po ON po.order_id=o.id LEFT JOIN portal_prescriptions rx ON rx.order_id=o.id ORDER BY o.created_at DESC',
+        'SELECT o.*,b.name AS branch_name,creator.name AS created_by_name,da.courier_id,da.status AS delivery_status,courier.name AS courier_name,po.ticket,po.expires_at AS reservation_expires_at,rx.review_status AS uploaded_rx_status,CASE WHEN EXISTS(SELECT 1 FROM order_items oi JOIN products p ON p.id=oi.product_id WHERE oi.order_id=o.id AND p.prescription=1) THEN 1 ELSE 0 END AS needs_prescription FROM orders o JOIN branches b ON b.id=o.branch_id LEFT JOIN users creator ON creator.id=o.created_by LEFT JOIN delivery_assignments da ON da.order_id=o.id LEFT JOIN users courier ON courier.id=da.courier_id LEFT JOIN portal_orders po ON po.order_id=o.id LEFT JOIN portal_prescriptions rx ON rx.order_id=o.id ORDER BY o.created_at DESC',
       order_items: 'SELECT * FROM order_items',
       audit:
         'SELECT a.*,u.name AS user_name FROM audit_log a JOIN users u ON u.id=a.user_id ORDER BY a.created_at DESC LIMIT 500',
@@ -934,12 +934,16 @@ export class Pharmacy {
       ) {
         const assigned = (
           await q(
-            'SELECT courier_id FROM delivery_assignments WHERE order_id=$1' +
+            'SELECT courier_id,status FROM delivery_assignments WHERE order_id=$1' +
               (this.db.cloud ? ' FOR UPDATE' : ''),
             [key],
           )
         ).rows[0];
-        if (status !== 'Entregado' || assigned?.courier_id !== user.id)
+        const courierTransition =
+          assigned?.courier_id === user.id &&
+          ((status === 'En ruta' && assigned.status === 'Recogido') ||
+            (status === 'Entregado' && assigned.status === 'En ruta'));
+        if (!courierTransition)
           throw new AppError('Esta entrega no te estÃ¡ asignada.', 403);
       }
       const allowed = {

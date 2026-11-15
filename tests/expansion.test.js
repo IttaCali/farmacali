@@ -44,7 +44,18 @@ for (const dialect of ['SQLite', 'PostgreSQL']) {
       const admin = auth.publicUser(await auth.user('u-admin'));
       const auditor = auth.publicUser(await auth.user('u-auditor'));
       const branch = auth.publicUser(await auth.user('u-branch'));
-      const courier = auth.publicUser(await auth.user('u-courier'));
+      const callcenter = {
+        ...auth.publicUser(await auth.user('u-operator')),
+        branch_id: 'b1',
+      };
+      const courier = {
+        ...auth.publicUser(await auth.user('u-courier')),
+        branch_id: 'b1',
+      };
+      await q("UPDATE users SET branch_id='b1' WHERE id IN ($1,$2)", [
+        callcenter.id,
+        courier.id,
+      ]);
       const model = new Pharmacy(database, clock),
         portal = new Portal(database, clock),
         procurement = new Procurement(database),
@@ -491,13 +502,19 @@ for (const dialect of ['SQLite', 'PostgreSQL']) {
             () => delivery.location(oid, { lat: 14.614, lng: -90.551, simulated: true }, courier),
             /asignada/,
           );
-          await delivery.assign(oid, { courier_id: courier.id }, branch);
-          await delivery.location(oid, { lat: 14.614, lng: -90.551, simulated: true }, branch);
+          await model.orderStatus(oid, { status: 'Preparando' }, callcenter);
+          await delivery.assign(oid, { courier_id: courier.id }, callcenter);
+          await delivery.location(oid, { lat: 14.614, lng: -90.551, simulated: true }, callcenter);
           const list = await delivery.list(courier);
           assert.equal(list.orders.length, 1);
           assert.equal(list.points.length, 1);
           await assert.rejects(
-            () => delivery.location(oid, { lat: 14.614, lng: -90.551, simulated: false }, branch),
+            () =>
+              delivery.location(
+                oid,
+                { lat: 14.614, lng: -90.551, simulated: false },
+                callcenter,
+              ),
             /GPS real/,
           );
           await delivery.location(
@@ -505,8 +522,13 @@ for (const dialect of ['SQLite', 'PostgreSQL']) {
             { lat: 14.614, lng: -90.551, accuracy: 15, simulated: false },
             courier,
           );
-          await model.orderStatus(oid, { status: 'Preparando' }, branch);
-          await model.orderStatus(oid, { status: 'En ruta' }, branch);
+          await delivery.progress(oid, { action: 'pickup' }, courier);
+          assert.equal(
+            (await q('SELECT status FROM delivery_assignments WHERE order_id=$1', [oid])).rows[0]
+              .status,
+            'Recogido',
+          );
+          await delivery.progress(oid, { action: 'route' }, courier);
           await assert.rejects(() => delivery.finish(oid, { pickup_code: 'incorrecto' }, courier));
           await delivery.finish(
             oid,

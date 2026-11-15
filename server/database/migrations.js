@@ -113,6 +113,7 @@ export async function migrate(database) {
     await upgradeRolePolicy(database);
     await upgradeCashRegister(database);
     await removePhoneVerificationTables(database);
+    await upgradeCourierBranches(database);
     await upgradeEncryptionKey(database);
     return;
   }
@@ -248,6 +249,7 @@ export async function migrate(database) {
   await upgradeRolePolicy(database);
   await upgradeCashRegister(database);
   await removePhoneVerificationTables(database);
+  await upgradeCourierBranches(database);
   await upgradeEncryptionKey(database);
 }
 
@@ -556,5 +558,25 @@ async function removePhoneVerificationTables(database) {
     await q('DROP TABLE IF EXISTS phone_proofs');
     await q('DROP TABLE IF EXISTS phone_challenges');
     await q('INSERT INTO schema_migrations VALUES ($1,$2)', [12, new Date().toISOString()]);
+  });
+}
+
+async function upgradeCourierBranches(database) {
+  if ((await database.query('SELECT version FROM schema_migrations WHERE version=13')).rows.length)
+    return;
+  await database.transaction(async (q) => {
+    await q("UPDATE roles SET scope='branch' WHERE code='courier'");
+    const preferred = (
+      await q("SELECT id FROM branches WHERE id='b3' AND active=1 AND state='Activo'")
+    ).rows[0];
+    const fallback = preferred || (
+      await q("SELECT id FROM branches WHERE active=1 AND state='Activo' ORDER BY name LIMIT 1")
+    ).rows[0];
+    if (fallback)
+      await q(
+        "UPDATE users SET branch_id=$1 WHERE role_id=(SELECT id FROM roles WHERE code='courier') AND branch_id IS NULL",
+        [fallback.id],
+      );
+    await q('INSERT INTO schema_migrations VALUES ($1,$2)', [13, new Date().toISOString()]);
   });
 }

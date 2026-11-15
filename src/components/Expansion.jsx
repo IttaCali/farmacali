@@ -966,7 +966,13 @@ export function DeliveryPage({ user }) {
             { label: 'Registró', render: (r) => r.created_by_name || 'Portal del cliente' },
             { label: 'Asignó', render: (r) => r.assigned_by_name || 'Sin asignación' },
             { label: 'Sucursal', key: 'branch_name' },
-            { label: 'Estado', key: 'order_status' },
+            {
+              label: 'Estado',
+              render: (r) =>
+                r.delivery_status && r.order_status === 'Preparando'
+                  ? r.delivery_status
+                  : r.order_status,
+            },
             { label: 'Repartidor', render: (r) => r.courier_name || 'Sin asignar' },
             { label: 'Fecha', render: (r) => datetime(r.created_at) },
             {
@@ -990,7 +996,7 @@ export function DeliveryPage({ user }) {
                     setMapUnavailable(false);
                   }}
                 >
-                  {canManage ? 'Gestionar entrega' : 'Ver entrega'}
+                  {canManage ? 'Gestionar entrega' : own ? 'Abrir entrega' : 'Ver entrega'}
                 </button>
               ),
             },
@@ -999,7 +1005,7 @@ export function DeliveryPage({ user }) {
       </Panel>
       {order && (
         <Modal
-          title={canManage ? 'Gestionar entrega' : 'Ver entrega'}
+          title={canManage ? 'Gestionar entrega' : own ? 'Entrega asignada' : 'Ver entrega'}
           subtitle={`${order.ticket || order.id.slice(0, 8)} · ${order.customer}`}
           onClose={() => {
             stop();
@@ -1109,9 +1115,33 @@ export function DeliveryPage({ user }) {
               {order.accuracy || 0} m.
             </p>
           )}
+          {own && order.order_status === 'Preparando' && order.delivery_status === 'Asignado' && (
+            <div className="exp-form">
+              <p>La sucursal tiene listo este pedido. Confirma cuando recibas la bolsa.</p>
+              <button
+                className="primary-button"
+                disabled={busy}
+                onClick={() => run(`/deliveries/${order.id}/progress`, { action: 'pickup' })}
+              >
+                Recoger pedido en sucursal
+              </button>
+            </div>
+          )}
+          {own && order.order_status === 'Preparando' && order.delivery_status === 'Recogido' && (
+            <div className="exp-form">
+              <p>Pedido recogido. Inicia la ruta cuando salgas hacia el domicilio del cliente.</p>
+              <button
+                className="primary-button"
+                disabled={busy}
+                onClick={() => run(`/deliveries/${order.id}/progress`, { action: 'route' })}
+              >
+                Iniciar ruta de entrega
+              </button>
+            </div>
+          )}
           {order.courier_id &&
             (own || user.permissions.includes('entrega.gestionar')) &&
-            !['Entregado', 'Cancelado'].includes(order.order_status) && (
+            order.order_status === 'En ruta' && (
               <div className="exp-form">
                 <label>
                   Avance de la simulación: {progress}%
@@ -1156,15 +1186,16 @@ export function DeliveryPage({ user }) {
               }}
             >
               <label>
-                Código de autorización
+                Número de ticket
                 <input
                   value={code}
                   required={!qr}
                   maxLength={24}
                   onChange={(e) => {
-                    setCode(e.target.value);
+                    setCode(e.target.value.trim().toUpperCase());
                     setQr('');
                   }}
+                  placeholder="Ej. FC-8B0E96"
                 />
               </label>
               <OrderQrReader
@@ -1182,10 +1213,10 @@ export function DeliveryPage({ user }) {
               />
               <label className="exp-check">
                 <input type="checkbox" required />
-                Confirmo la entrega y el cobro.
+                Confirmo que entregué los medicamentos al cliente y recibí el cobro.
               </label>
               <button className="primary-button" disabled={busy}>
-                Confirmar entrega asignada
+                Finalizar entrega
               </button>
             </form>
           )}

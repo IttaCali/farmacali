@@ -41,7 +41,7 @@ export class Delivery {
         ? []
         : (
             await this.db.query(
-              "SELECT u.id,u.name FROM users u JOIN roles r ON r.id=u.role_id WHERE r.code='courier' AND u.state='Activo' ORDER BY u.name",
+              "SELECT u.id,u.name,u.surname,u.branch_id FROM users u JOIN roles r ON r.id=u.role_id WHERE r.code='courier' AND u.state='Activo' ORDER BY u.name,u.surname",
             )
           ).rows,
     };
@@ -54,13 +54,16 @@ export class Delivery {
       ).rows[0];
       if (!order) throw new AppError('Pedido no encontrado.', 404);
       scope(user, order.branch_id);
-      if (order.fulfillment !== 'delivery' || ['Entregado', 'Cancelado'].includes(order.status))
+      if (
+        order.fulfillment !== 'delivery' ||
+        !['Preparando', 'En ruta'].includes(order.status)
+      )
         throw new AppError('Solo se asignan pedidos a domicilio activos.', 409);
       if (
         !(
           await q(
-            "SELECT u.id FROM users u JOIN roles r ON r.id=u.role_id WHERE u.id=$1 AND r.code='courier' AND u.state='Activo'",
-            [data.courier_id],
+            "SELECT u.id FROM users u JOIN roles r ON r.id=u.role_id WHERE u.id=$1 AND u.branch_id=$2 AND r.code='courier' AND u.state='Activo'",
+            [data.courier_id, order.branch_id],
           )
         ).rows.length
       )
@@ -74,6 +77,32 @@ export class Delivery {
         courier_id: data.courier_id,
       });
       return { id };
+    });
+  }
+  async progress(id, data, user) {
+    if (!user.permissions.includes('entrega.propia'))
+      throw new AppError('Esta acción corresponde al repartidor asignado.', 403);
+    if (data.action === 'route') {
+      const assignment = await this.db.transaction((q) => this.owned(q, id, user));
+      if (assignment.order_status !== 'Preparando' || assignment.status !== 'Recogido')
+        throw new AppError('Primero confirma que recogiste el pedido en la sucursal.', 409);
+      await new Pharmacy(this.db).orderStatus(id, { status: 'En ruta' }, user);
+      return { id, status: 'En ruta' };
+    }
+    return this.db.transaction(async (q) => {
+      const assignment = await this.owned(q, id, user);
+      if (assignment.order_status !== 'Preparando' || assignment.status !== 'Asignado')
+        throw new AppError('El pedido no está disponible para recoger.', 409);
+      const changed = await q(
+        "UPDATE delivery_assignments SET status='Recogido' WHERE order_id=$1 AND status='Asignado'",
+        [id],
+      );
+      if (!changed.rowCount) throw new AppError('La entrega cambió. Actualiza la página.', 409);
+      await writeAudit(q, user, 'RECOGER_PEDIDO', 'pedido', id, {
+        branch_id: assignment.branch_id,
+        courier_id: user.id,
+      });
+      return { id, status: 'Recogido' };
     });
   }
   async owned(q, id, user) {
