@@ -90,7 +90,7 @@ const descriptions = {
   payrollPlus: 'Novedades, deducciones, provisiones y pagos detallados.',
   deliveries: 'Asignación, ubicación y coordinación de entregas.',
   myDeliveries: 'Entregas asignadas a tu cuenta y ubicación compartida.',
-  messages: 'Avisos automáticos simulados para la demostración universitaria.',
+  messages: 'Notificaciones automáticas generadas durante la gestión de pedidos.',
   dashboard: 'Una mirada a toda tu operación, en un solo lugar.',
   branches: 'Conecta y supervisa cada punto de venta de la red.',
   inventory: 'Control de medicamentos, lotes y fechas de vencimiento.',
@@ -1912,7 +1912,7 @@ export default function App() {
             </p>
             <p>
               <strong>4. Pedidos y entregas.</strong> Pedidos reúne solicitud, receta y preparación.
-              Reparto permite asignar y ubicar al repartidor. Avisos muestra los mensajes simulados.
+              Reparto permite asignar y ubicar al repartidor. Avisos muestra las notificaciones enviadas durante el pedido.
               La entrega se confirma con el código o QR y el cobro.
             </p>
             <p>
@@ -1928,7 +1928,7 @@ export default function App() {
             </p>
             <div className="section-note">
               Cuatro roles principales: Administrador, Sucursal, Call center y Auditor. El cliente
-              utiliza el portal sin crear cuenta; Repartidor es un acceso opcional de demostración.
+              utiliza el portal sin crear cuenta; Repartidor permite gestionar las entregas asignadas.
               Actualización cada 30 segundos. La disponibilidad se valida nuevamente al confirmar.
               Los tiempos de entrega son estimaciones geográficas.
             </div>

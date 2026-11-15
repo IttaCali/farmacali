@@ -221,7 +221,7 @@ export default function CustomerPortal() {
       return;
     }
     if (false) {
-      setError('Completa el código de verificación simulado del teléfono.');
+      setError('Completa el código de verificación del teléfono.');
       return;
     }
     setError('');

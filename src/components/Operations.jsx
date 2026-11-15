@@ -49,7 +49,7 @@ export const moduleNav = [
   ['payrollPlus', 'Planilla detallada', Wallet, 'planilla.ver'],
   ['deliveries', 'Coordinación de entregas', Truck, 'entrega.ver'],
   ['myDeliveries', 'Mis entregas', Truck, 'entrega.propia'],
-  ['messages', 'Avisos simulados', Wallet, 'mensajes.ver'],
+  ['messages', 'Avisos de pedidos', Wallet, 'mensajes.ver'],
   ['counter', 'Ventas en mostrador', Wallet, 'venta.ver'],
   ['users', 'Usuarios y roles', ShieldCheck, 'usuario.ver'],
   ['requests', 'Anulaciones y ajustes', CheckCircle2, 'solicitud.ver'],
@@ -779,7 +779,7 @@ export function Operations({
     content.push(
       <Panel
         key="simulation"
-        title="Demostración de detección de alteraciones"
+        title="Verificación de integridad"
         subtitle="Se altera una copia en memoria, sin cambiar los registros reales"
         action={
           <button disabled={busy} className="secondary-button" onClick={simulate}>
@@ -1432,8 +1432,7 @@ export function RoleDashboard({ data, user, onNavigate }) {
         subtitle="Consulta los pedidos que te asignó la farmacia y confirma la entrega con el código o QR del cliente."
       >
         <p className="exp-notice">
-          Puedes compartir tu ubicación mientras haces una entrega o usar el avance simulado durante
-          la demostración.
+          Puedes compartir tu ubicación mientras realizas una entrega y mantener actualizado su avance.
         </p>
         <button className="primary-button" onClick={() => onNavigate('myDeliveries')}>
           <Truck size={18} /> Abrir mis entregas

@@ -35,7 +35,7 @@ export async function upgradeExpansion(database) {
       'entrega.ver': 'Consultar coordinación de entregas',
       'entrega.gestionar': 'Asignar repartidores',
       'entrega.propia': 'Gestionar entregas asignadas',
-      'mensajes.ver': 'Consultar avisos simulados',
+      'mensajes.ver': 'Consultar avisos de pedidos',
     };
     for (const [code, label] of Object.entries(permissions))
       await q(
@@ -70,7 +70,7 @@ export async function upgradeExpansion(database) {
         "INSERT INTO users (id,name,email,password_hash,role,role_id,must_change_password) VALUES ($1,$2,$3,$4,'operator','r-courier',0) ON CONFLICT(email) DO NOTHING",
         [
           'u-courier',
-          'Repartidor de demostración',
+          'Repartidor asignado',
           'repartidor@farmacia.gt',
           await bcrypt.hash('Repartidor2026!', 12),
         ],

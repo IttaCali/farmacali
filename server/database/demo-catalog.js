@@ -114,7 +114,7 @@ export async function seedDemoCatalog(database) {
         const group = productRows.filter((p) => supplierIds.indexOf(p.supplierId) === supplierIndex);
         if (!group.length) continue;
         const purchaseId = randomUUID();
-        await q('INSERT INTO purchase_orders (id,supplier_id,branch_id,status,payment,notes,created_at,created_by) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)', [purchaseId,supplierId,branch.id,'Recibida','Transferencia','Carga inicial de catalogo para demostracion',new Date().toISOString(),admin.id]);
+        await q('INSERT INTO purchase_orders (id,supplier_id,branch_id,status,payment,notes,created_at,created_by) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)', [purchaseId,supplierId,branch.id,'Recibida','Transferencia','Carga inicial de catálogo',new Date().toISOString(),admin.id]);
         for (const product of group) {
           const quantity = 20;
           const lot = `DEMO-${product.sku}-${branch.id}`;

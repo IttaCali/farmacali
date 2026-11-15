@@ -9,7 +9,7 @@ export const moduleViews = {
   orders: [
     ['orders', 'Pedidos'],
     ['deliveries', 'Reparto'],
-    ['messages', 'Avisos de prueba'],
+    ['messages', 'Avisos de pedidos'],
   ],
   payroll: [
     ['payroll', 'Personal e historial'],

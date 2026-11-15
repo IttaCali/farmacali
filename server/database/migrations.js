@@ -114,6 +114,7 @@ export async function migrate(database) {
     await upgradeCashRegister(database);
     await removePhoneVerificationTables(database);
     await upgradeCourierBranches(database);
+    await upgradeProfessionalLabels(database);
     await upgradeEncryptionKey(database);
     return;
   }
@@ -250,6 +251,7 @@ export async function migrate(database) {
   await upgradeCashRegister(database);
   await removePhoneVerificationTables(database);
   await upgradeCourierBranches(database);
+  await upgradeProfessionalLabels(database);
   await upgradeEncryptionKey(database);
 }
 
@@ -578,5 +580,15 @@ async function upgradeCourierBranches(database) {
         [fallback.id],
       );
     await q('INSERT INTO schema_migrations VALUES ($1,$2)', [13, new Date().toISOString()]);
+  });
+}
+
+async function upgradeProfessionalLabels(database) {
+  if ((await database.query('SELECT version FROM schema_migrations WHERE version=14')).rows.length)
+    return;
+  await database.transaction(async (q) => {
+    await q("UPDATE permissions SET description='Consultar avisos de pedidos' WHERE code='mensajes.ver'");
+    await q("UPDATE users SET name='Repartidor asignado' WHERE name='Repartidor de demostración'");
+    await q('INSERT INTO schema_migrations VALUES ($1,$2)', [14, new Date().toISOString()]);
   });
 }

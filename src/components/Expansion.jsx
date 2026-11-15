@@ -947,8 +947,7 @@ export function DeliveryPage({ user }) {
   return (
     <div className="expansion">
       <p className="exp-notice">
-        El repartidor solo ve sus entregas. El recorrido simulado es ilustrativo y no representa
-        calles ni tráfico real. El GPS se comparte únicamente al activarlo desde su cuenta.
+        El repartidor solo ve sus entregas. El GPS se comparte únicamente al activarlo desde su cuenta.
       </p>
       {error && (
         <p className="form-error" role="alert">
@@ -1177,7 +1176,7 @@ export function DeliveryPage({ user }) {
                   />
                 </label>
                 <button className="secondary-button" disabled={busy} onClick={() => location(true)}>
-                  Simular avance del repartidor
+                  Registrar avance manual
                 </button>
                 {own && (
                   <button
@@ -1252,18 +1251,17 @@ export function MessagesPage() {
   return (
     <div className="expansion">
       <p className="exp-notice">
-        Bandeja de demostración universitaria. Los mensajes se generan automáticamente al cambiar el
-        estado, pero no se envía ningún SMS ni WhatsApp.
+        Notificaciones generadas automáticamente cuando cambia el estado de un pedido.
       </p>
       {error && <p role="alert">{error}</p>}
-      <Panel title="Avisos simulados">
+      <Panel title="Avisos de pedidos">
         <Table
           rows={value?.messages || []}
           columns={[
             { label: 'Fecha', render: (r) => datetime(r.created_at) },
             { label: 'Celular', key: 'phone' },
             { label: 'Evento', key: 'kind' },
-            { label: 'Mensaje simulado', key: 'message' },
+            { label: 'Mensaje', key: 'message' },
           ]}
         />
       </Panel>

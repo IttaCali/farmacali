@@ -129,7 +129,7 @@ export async function initialize(database = db) {
             category,
             amount,
             'Efectivo',
-            `Movimiento de demostración · ${category}`,
+            `Movimiento inicial · ${category}`,
             date,
             'u-admin',
           ]);

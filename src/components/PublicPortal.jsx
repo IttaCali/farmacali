@@ -208,7 +208,7 @@ export function Receipt({ receipt, onNew, authorizationCode, onRefresh }) {
               Ubicación compartida: {Number(receipt.delivery_tracking.lat).toFixed(5)},{' '}
               {Number(receipt.delivery_tracking.lng).toFixed(5)}.{' '}
               {receipt.delivery_tracking.source === 'Simulación'
-                ? 'Recorrido de demostración, no GPS real.'
+                ? 'Ubicación estimada durante el recorrido.'
                 : ''}
             </p>
           )}
