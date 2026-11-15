@@ -956,7 +956,16 @@ export default function App() {
                           ? 'Portal del cliente'
                           : r.created_by_name || 'Sin registro',
                     },
+                    {
+                      label: 'Call center',
+                      render: (r) => r.callcenter_name || 'Sin atención registrada',
+                    },
                     { label: 'Repartidor', render: (r) => r.courier_name || 'Sin asignar' },
+                    {
+                      label: 'Atendido por',
+                      render: (r) => r.attended_by_name || 'Sin identificar',
+                    },
+                    { label: 'Rol', render: (r) => r.attended_by_role || 'Sin identificar' },
                     {
                       label: 'Estado',
                       render: (r) => <Badge tone={tone(r.status)}>{r.status}</Badge>,

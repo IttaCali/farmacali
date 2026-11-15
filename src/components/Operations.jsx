@@ -1578,10 +1578,10 @@ export function RoleDashboard({ data, user, onNavigate }) {
                     : 'No aplica',
               },
               {
-                label: 'Responsable final',
-                render: (row) =>
-                  `${row.attended_by_name || 'Sin identificar'} · ${row.attended_by_role || 'Sin rol'}`,
+                label: 'Atendido por',
+                render: (row) => row.attended_by_name || 'Sin identificar',
               },
+              { label: 'Rol', render: (row) => row.attended_by_role || 'Sin identificar' },
               { label: 'Pago', key: 'payment' },
               { label: 'Total', render: (row) => money(row.total_cents) },
               { label: 'Finalizado', render: (row) => datetime(row.delivered_at) },
