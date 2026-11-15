@@ -33,7 +33,6 @@ app.use(
           'data:',
           'https://*.tile.openstreetmap.org',
           'https://tile.openstreetmap.org',
-          'https://*.basemaps.cartocdn.com',
         ],
         connectSrc: ["'self'"],
         fontSrc: ["'self'"],
@@ -41,6 +40,7 @@ app.use(
         upgradeInsecureRequests: null,
       },
     },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
   }),
 );
 app.use('/api/portal/orders', express.json({ limit: '4mb' }));
