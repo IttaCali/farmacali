@@ -21,6 +21,63 @@ const resources = {
   requests: ['requests', 'solicitud.ver'],
   prescriptions: ['prescriptions', 'receta.ver'],
 };
+function renderPdfTable(doc, { title, columns, keys, values, rows, query, branch }) {
+  const pageWidth = 785.89;
+  const weights = keys.map((key) =>
+    /description|reason|address|customer|user_name/.test(key)
+      ? 1.7
+      : /created_at|branch_name/.test(key)
+        ? 1.35
+        : 1,
+  );
+  const totalWeight = weights.reduce((sum, value) => sum + value, 0);
+  const widths = weights.map((weight) => (pageWidth * weight) / totalWeight);
+  const generated = new Intl.DateTimeFormat('es-GT', {
+    timeZone: 'America/Guatemala', dateStyle: 'medium', timeStyle: 'short',
+  }).format(new Date());
+  const heading = () => {
+    doc.font('Helvetica-Bold').fontSize(17).fillColor('#4f2d75').text(`FarmaCali · ${title}`);
+    doc.font('Helvetica').fontSize(8.5).fillColor('#5f5968').text(
+      `Período: ${query.from || 'Inicio'} a ${query.to || 'hoy'} · Sucursal: ${branch} · ${rows.length} registros · Generado: ${generated}`,
+    );
+    doc.moveDown(0.7);
+  };
+  const header = () => {
+    let x = 28;
+    const y = doc.y;
+    doc.rect(28, y, pageWidth, 26).fill('#7050a4');
+    keys.forEach((key, index) => {
+      doc.font('Helvetica-Bold').fontSize(7.5).fillColor('#ffffff').text(
+        columns[key], x + 4, y + 7, { width: widths[index] - 8, height: 16, ellipsis: true },
+      );
+      x += widths[index];
+    });
+    doc.y = y + 26;
+  };
+  heading();
+  header();
+  values.forEach((row, rowIndex) => {
+    if (doc.y + 34 > 555) {
+      doc.addPage();
+      heading();
+      header();
+    }
+    const y = doc.y;
+    doc.rect(28, y, pageWidth, 34).fill(rowIndex % 2 ? '#f4f0f8' : '#ffffff');
+    let x = 28;
+    row.forEach((value, index) => {
+      doc.font('Helvetica').fontSize(7.2).fillColor('#332c40').text(
+        String(value ?? ''), x + 4, y + 6, { width: widths[index] - 8, height: 23, ellipsis: true },
+      );
+      x += widths[index];
+    });
+    doc.y = y + 34;
+  });
+  if (!values.length)
+    doc.font('Helvetica').fontSize(10).fillColor('#685a77').text(
+      'No hay registros para los filtros seleccionados.', 32, doc.y + 12,
+    );
+}
 export async function report(req, res) {
   const resource = resources[req.params.name];
   if (!resource) throw new AppError('Reporte desconocido.', 404);
@@ -170,14 +227,14 @@ export async function report(req, res) {
       net_cents: 'Neto Q',
     },
     audit: {
-      sequence: 'Secuencia',
+      created_at: 'Fecha',
+      branch_name: 'Sucursal',
       user_name: 'Usuario',
+      role_code: 'Rol',
       action: 'Acción',
       entity: 'Entidad',
       entity_id: 'Referencia',
-      created_at: 'Fecha',
-      previous_hash: 'Hash previo',
-      current_hash: 'Hash actual',
+      ip: 'Origen / IP',
     },
     branches: {
       name: 'Sucursal',
@@ -307,30 +364,28 @@ export async function report(req, res) {
     res.type('application/pdf');
     const doc = new PDFDocument({
       size: 'A4',
-      margin: 45,
+      layout: 'landscape',
+      margin: 28,
       info: { Title: `FarmaCali · ${req.params.name}`, Author: 'FarmaCali' },
     });
     doc.pipe(res);
-    doc.fontSize(20).fillColor('#7050a4').text(`FarmaCali · ${req.params.name}`);
-    doc
-      .fontSize(9)
-      .fillColor('#667777')
-      .text(
-        `Generado ${new Intl.DateTimeFormat('es-GT', { timeZone: 'America/Guatemala', dateStyle: 'medium', timeStyle: 'short' }).format(new Date())} · ${rows.length} registros`,
-      );
-    doc.moveDown();
-    values.forEach((v, index) => {
-      if (doc.y > 730) doc.addPage();
-      doc
-        .fontSize(10)
-        .fillColor('#253344')
-        .text(
-          `${index + 1}. ${v.map((value, i) => `${columns[keys[i]]}: ${value}`).join('  |  ')}`,
-          { lineGap: 3 },
-        );
-      doc.moveDown(0.8);
+    renderPdfTable(doc, {
+      title,
+      columns,
+      keys,
+      values,
+      rows,
+      query: req.query,
+      branch:
+        req.user.scope === 'branch'
+          ? req.user.branch_name
+          : rows.find((row) => row.branch_name)?.branch_name ||
+            (req.query.branch_id && req.query.branch_id !== 'all'
+              ? req.query.branch_id
+              : 'Todas las sucursales'),
     });
     doc.end();
+    return;
   } else {
     res.type('text/csv');
     const cell = (v) =>

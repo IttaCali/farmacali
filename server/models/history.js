@@ -19,8 +19,8 @@ const sources = {
   },
   audit: {
     permission: 'auditoria.ver',
-    select: 'c.*,u.name AS user_name',
-    from: 'audit_log c JOIN users u ON u.id=c.user_id',
+    select: 'c.*,u.name AS user_name,b.name AS branch_name',
+    from: 'audit_log c JOIN users u ON u.id=c.user_id LEFT JOIN branches b ON b.id=c.branch_id',
     alias: 'c',
     fields: ['action', 'entity', 'entity_id', 'details'],
     date: 'created_at',

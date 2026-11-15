@@ -1020,6 +1020,28 @@ export function DeliveryPage({ user }) {
           <p>
             {order.address} · {order.payment} · {money(order.total_cents)}
           </p>
+          {own && (
+            <div className="exp-notice">
+              <strong>Ubicación exacta de entrega</strong>
+              <p>{order.address}</p>
+              <p>
+                Cliente: {order.customer} · Teléfono:{' '}
+                <a href={`tel:${order.phone}`}>{order.phone}</a>
+              </p>
+              <p>
+                Coordenadas: {Number(order.destination_lat).toFixed(6)},{' '}
+                {Number(order.destination_lng).toFixed(6)}
+              </p>
+              <a
+                className="secondary-button"
+                href={`https://www.google.com/maps/dir/?api=1&destination=${order.destination_lat},${order.destination_lng}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Abrir ruta en Google Maps
+              </a>
+            </div>
+          )}
           {!own &&
             user.permissions.includes('entrega.gestionar') &&
             !['Entregado', 'Cancelado'].includes(order.order_status) && (

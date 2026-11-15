@@ -17,6 +17,9 @@ import {
   Search,
   Truck,
   Building2,
+  ShoppingBag,
+  TrendingUp,
+  Activity,
 } from 'lucide-react';
 import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -1414,7 +1417,8 @@ export function ThemeToggle() {
   );
 }
 export function RoleDashboard({ data, user, onNavigate }) {
-  const [risk, setRisk] = useState([]);
+  const [risk, setRisk] = useState([]),
+    [employeeRole, setEmployeeRole] = useState('all');
   useEffect(() => {
     if (user.permissions.includes('riesgo.ver'))
       api('/risk')
@@ -1475,6 +1479,102 @@ export function RoleDashboard({ data, user, onNavigate }) {
       </div>
     </Panel>
   );
+  if (user.role === 'branch') {
+    const localDate = (value) =>
+      value
+        ? new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'America/Guatemala',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          }).format(new Date(value))
+        : '';
+    const todaySales = data.orders.filter(
+      (order) => order.status === 'Entregado' && localDate(order.delivered_at) === data.date,
+    );
+    const ticketType = (order) =>
+      order.channel === 'mostrador'
+        ? 'Venta en mostrador'
+        : order.fulfillment === 'delivery'
+          ? 'Entrega a domicilio'
+          : 'Recoger en tienda';
+    const roleOptions = [...new Set(todaySales.map((order) => order.attended_by_role).filter(Boolean))];
+    const visibleSales = todaySales.filter(
+      (order) => employeeRole === 'all' || order.attended_by_role === employeeRole,
+    );
+    const totals = Object.fromEntries(
+      ['Venta en mostrador', 'Recoger en tienda', 'Entrega a domicilio'].map((type) => [
+        type,
+        todaySales
+          .filter((order) => ticketType(order) === type)
+          .reduce((sum, order) => sum + Number(order.total_cents || 0), 0),
+      ]),
+    );
+    const salesTotal = todaySales.reduce(
+      (sum, order) => sum + Number(order.total_cents || 0),
+      0,
+    );
+    const cashIncome = data.cash
+      .filter(
+        (movement) => movement.kind === 'Ingreso' && localDate(movement.created_at) === data.date,
+      )
+      .reduce((sum, movement) => sum + Number(movement.amount_cents || 0), 0);
+    return (
+      <>
+        <div className="role-banner">
+          <Wallet size={23} />
+          <div>
+            <strong>Ventas de hoy · {user.branch_name}</strong>
+            <p>Control de tickets atendidos por el equipo e ingresos registrados durante el día.</p>
+          </div>
+        </div>
+        <div className="stats-grid three">
+          <Stat label="Venta en mostrador" value={money(totals['Venta en mostrador'])} icon={Wallet} detail="Cobros presenciales" />
+          <Stat label="Recoger en tienda" value={money(totals['Recoger en tienda'])} icon={ShoppingBag} detail="Pedidos retirados" />
+          <Stat label="Entrega a domicilio" value={money(totals['Entrega a domicilio'])} icon={Truck} detail="Pedidos entregados" />
+        </div>
+        <div className="stats-grid three">
+          <Stat label="Total vendido hoy" value={money(salesTotal)} icon={TrendingUp} detail={`${todaySales.length} tickets finalizados`} />
+          <Stat label="Ingresos en caja" value={money(cashIncome)} icon={Wallet} detail="Movimientos de ingreso del día" />
+          <Stat
+            label="Cuadre del día"
+            value={money(cashIncome - salesTotal)}
+            icon={cashIncome === salesTotal ? CheckCircle2 : Activity}
+            tone={cashIncome === salesTotal ? 'green' : 'orange'}
+            detail={cashIncome === salesTotal ? 'Ventas e ingresos cuadran' : 'Revisar diferencia'}
+          />
+        </div>
+        <Panel
+          title="Tickets atendidos hoy"
+          subtitle="Mostrador, retiro en tienda y entrega a domicilio con su responsable"
+          action={
+            <select
+              aria-label="Filtrar por rol del empleado"
+              value={employeeRole}
+              onChange={(event) => setEmployeeRole(event.target.value)}
+            >
+              <option value="all">Todos los roles</option>
+              {roleOptions.map((role) => <option value={role} key={role}>{role}</option>)}
+            </select>
+          }
+        >
+          <Table
+            rows={visibleSales}
+            columns={[
+              { label: 'Ticket', render: (row) => row.ticket || row.id.slice(0, 8).toUpperCase() },
+              { label: 'Tipo', render: ticketType },
+              { label: 'Cliente', key: 'customer' },
+              { label: 'Atendió', render: (row) => row.attended_by_name || 'Sin identificar' },
+              { label: 'Rol', render: (row) => row.attended_by_role || 'Sin identificar' },
+              { label: 'Pago', key: 'payment' },
+              { label: 'Total', render: (row) => money(row.total_cents) },
+              { label: 'Finalizado', render: (row) => datetime(row.delivered_at) },
+            ]}
+          />
+        </Panel>
+      </>
+    );
+  }
   return (
     <>
       {user.role !== 'admin' && (

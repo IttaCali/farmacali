@@ -584,6 +584,10 @@ export default function App() {
       ([key]) =>
         user.role !== 'callcenter' || ['dashboard', 'inventory', 'orders', 'counter'].includes(key),
     )
+    .filter(
+      ([key]) =>
+        user.role !== 'branch' || !['branches', 'audit', 'requests'].includes(key),
+    )
     .filter(([key]) =>
       (moduleViews[key] || [[key]]).some(([view]) =>
         user.permissions.includes(navPermissions[view]),
