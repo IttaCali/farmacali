@@ -171,6 +171,7 @@ export default function App() {
     [mobile, setMobile] = useState(false),
     [notifications, setNotifications] = useState(false),
     [error, setError] = useState('');
+  const [orderStatusTab, setOrderStatusTab] = useState('pending');
   const [formErrors, setFormErrors] = useState({});
   const [recordAction, setRecordAction] = useState(null);
   useEffect(() => {
@@ -1497,8 +1498,56 @@ export default function App() {
                 title="Pedidos y entregas"
                 subtitle="Vista de la sucursal: responsable, repartidor y estado de cada pedido."
               >
+                <nav className="module-tabs" aria-label="Clasificar tickets por estado">
+                  {[
+                    [
+                      'pending',
+                      'Pendientes',
+                      orders.filter(
+                        (order) =>
+                          order.channel !== 'mostrador' &&
+                          !['Entregado', 'Cancelado'].includes(order.status),
+                      ).length,
+                    ],
+                    [
+                      'completed',
+                      'Finalizados',
+                      orders.filter(
+                        (order) => order.channel !== 'mostrador' && order.status === 'Entregado',
+                      ).length,
+                    ],
+                    [
+                      'cancelled',
+                      'Cancelados',
+                      orders.filter(
+                        (order) => order.channel !== 'mostrador' && order.status === 'Cancelado',
+                      ).length,
+                    ],
+                  ].map(([key, label, total]) => (
+                    <button
+                      type="button"
+                      key={key}
+                      aria-current={orderStatusTab === key ? 'page' : undefined}
+                      className={orderStatusTab === key ? 'active' : ''}
+                      onClick={() => setOrderStatusTab(key)}
+                    >
+                      {label} ({total})
+                    </button>
+                  ))}
+                </nav>
                 <Table
-                  rows={filtered(orders.filter((o) => o.channel !== 'mostrador'))}
+                  rows={filtered(
+                    orders
+                      .filter((order) => order.channel !== 'mostrador')
+                      .filter((order) =>
+                        orderStatusTab === 'pending'
+                          ? !['Entregado', 'Cancelado'].includes(order.status)
+                          : orderStatusTab === 'completed'
+                            ? order.status === 'Entregado'
+                            : order.status === 'Cancelado',
+                      )
+                      .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)),
+                  )}
                   columns={[
                     {
                       label: 'Pedido / cliente',
